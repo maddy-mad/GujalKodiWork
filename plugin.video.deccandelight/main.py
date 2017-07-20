@@ -576,9 +576,9 @@ def play_video(iurl):
     """
     streamer_list = ['tamilgun', 'mersalaayitten', 'mhdtvlive.',
                      'tamiltvsite.', 'cloudspro.', 'abroadindia.',
-                     'hindigeetmala.','.mp4', 'googlevideo.' ,
-                     'tamilhdtv.', 'andhrawatch.','justmoviesonline.',
-                     '.mp3', 'ozee.']
+                     'hindigeetmala.','.mp4', 'googlevideo.', 
+                     'tamilhdtv.', 'andhrawatch.', '.m3u8',
+                     'justmoviesonline.', '.mp3', 'ozee.']
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=iurl)
     vid_url = play_item.getfilename()

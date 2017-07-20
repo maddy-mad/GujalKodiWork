@@ -82,19 +82,24 @@ class mersal(Scraper):
         url = self.bu[:-9] + 'embed/' + url.split('/')[4]
         headers = self.hdr
         headers['Accept-Encoding'] = 'deflate'
-        html = requests.get(url, headers=headers).text
-        mlink = SoupStrainer('video')
-        videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
+        r = requests.get(url, headers=headers)
+        link = r.text
+        cookies = r.cookies
+        xmlurl = re.findall("var cnf='(.*?)'", link)[0]
+        headers['Referer'] = url
+
+        link = requests.get(xmlurl, headers=headers, cookies=cookies).text
+        soup = BeautifulSoup(link)
         ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
-        stream_url = videoclass.find('source', {'res':'SD'}).get('src') + '|Referer=%s&User-Agent=%s'%(url,ua)
+        stream_url = soup.file.text + '|Referer=%s&User-Agent=%s'%(url,ua)
         if self.hdstr == 'true':
             try:
-                stream_url = videoclass.find('source', {'res':'HD'}).get('src') + '|Referer=%s&User-Agent=%s'%(url,ua)
+                stream_url = soup.filehd.text + '|Referer=%s&User-Agent=%s'%(url,ua)
             except:
                 pass
         
         try:
-            srtfile = videoclass.find('track')['src']
+            srtfile = soup.captions.text
         except:
             srtfile = None
             

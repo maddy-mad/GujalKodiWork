@@ -27,6 +27,7 @@ class tgun(Scraper):
         self.icon = self.ipath + 'tgun.png'
     
     def get_menu(self):
+        h = HTMLParser.HTMLParser()
         r = requests.get(self.bu, headers=self.hdr)
         if r.url != self.bu:
             self.bu = r.url
@@ -34,7 +35,7 @@ class tgun(Scraper):
         cats = re.findall('id="menu-item-[^4].*?href="((?=.*categories).*?)">((?!User).*?)<',r.text)
         sno = 1
         for cat in cats:
-            items['0%s'%sno+cat[1]] = cat[0]
+            items['0%s'%sno+h.unescape(cat[1]).encode('utf8')] = cat[0]
             sno+=1
         items['0%s'%sno+'[COLOR yellow]** Search **[/COLOR]'] = self.bu + '/?s='
         return (items,7,self.icon)
@@ -91,6 +92,22 @@ class tgun(Scraper):
                 url = source['file'] + '|Referer=http://%s/'%self.get_vidhost(source['file'])
                 url = urllib.quote_plus(url)
                 videos.append(('tamilgun | %s'%source['label'],url))
+        except:
+            pass
+
+        try:
+            sources = json.loads(re.findall('(?s)sources:\s*(.*?)\}\)',html)[0])
+            ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
+            for source in sources:    
+                url = source['file']
+                if 'play.php' in url:
+                    url += '|Referer=http://%s/'%self.get_vidhost(url)
+                    url = urllib.quote_plus(url)
+                    videos.append(('tamilgun | %s'%source['label'],url))
+                else:
+                    url += '|User-Agent=%s'%ua
+                    url = urllib.quote_plus(url)
+                    videos.append(('tamilgun live',url))
         except:
             pass
 
