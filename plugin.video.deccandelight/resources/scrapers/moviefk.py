@@ -23,11 +23,11 @@ import HTMLParser
 class moviefk(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://moviefka.net/category/'
+        self.bu = 'http://www.filmgur.com/category/'
         self.icon = self.ipath + 'moviefk.png'
         self.list = {'01Tamil Movies': self.bu + 'tamil-movies/',
                      '02Telugu Movies': self.bu + 'telugu-movies/',
-                     '03Hindi Movies': self.bu + 'hindi-movies/',
+                     '03Hindi Movies': self.bu + 'bollywood-movies/',
                      '04English Movies': self.bu + 'hollywood-movies/',
                      '05Hindi Dubbed Movies': self.bu + 'hindi-dubbed-movies/',
                      '06Punjabi Movies': self.bu + 'punjabi-movies/',
@@ -46,30 +46,26 @@ class moviefk(Scraper):
             url = url + search_text
 
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'id':'archive'})
+        mlink = SoupStrainer('div', {'id':'primary'})
         mdiv = BeautifulSoup(html, parseOnlyThese=mlink)
-        plink = SoupStrainer('div', {'class':'navigation'})
+        plink = SoupStrainer('nav', {'id':None})
         Paginator = BeautifulSoup(html, parseOnlyThese=plink)
-        items = mdiv.findAll('li')
+        items = mdiv.findAll('article')
         
         for item in items:
-            if 'postcontent' in str(item):
-                title = h.unescape(item.h2.text)
-                title = self.clean_title(title)
-                url = item.find('a')['href']
-                try:
-                    thumb = item.find('img')['src']
-                except:
-                    thumb = self.icon
-                movies.append((title, thumb, url))
+            title = h.unescape(item.text)
+            title = self.clean_title(title)
+            url = item.find('a')['href']
+            try:
+                thumb = item.find('img')['src']
+            except:
+                thumb = self.icon
+            movies.append((title, thumb, url))
         
-        if 'next' in str(Paginator):
-            currpg = Paginator.find('span', {'class':re.compile('current')}).text
-            nlink = Paginator.find('a', {'class':re.compile('^next')})
-            purl = nlink.get('href')
-            pages = Paginator.findAll('a', {'class':'page-numbers'})
-            lastpg = pages[len(pages)-1].text
-            title = 'Next Page.. (Currently in Page %s of %s)' % (currpg,lastpg)
+        if 'nav-previous' in str(Paginator):
+            purl = Paginator.find('div', {'class':'nav-previous'}).find('a')['href']
+            currpg = int(purl.split('/')[-2])-1
+            title = 'Next Page.. (Currently in Page %s)'%currpg
             movies.append((title, self.nicon, purl))
         
         return (movies,8)
@@ -78,9 +74,9 @@ class moviefk(Scraper):
         videos = []
             
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'class':'entry'})
+        mlink = SoupStrainer('div', {'class':'entry-content'})
         videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
-        links = videoclass.findAll('a', {'title':re.compile('.')})
+        links = videoclass.findAll('a')
 
         for link in links:
             try:

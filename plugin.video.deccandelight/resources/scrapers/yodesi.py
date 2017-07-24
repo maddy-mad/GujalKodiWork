@@ -23,7 +23,7 @@ import HTMLParser
 class yodesi(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://www.yodesi.net/'
+        self.bu = 'http://www.yodesi.tv/'
         self.icon = self.ipath + 'yodesi.png'
         self.list = {'02Star Plus': self.bu + 'star-plus/',
                      '03Colors': self.bu + 'colors/',
@@ -53,7 +53,7 @@ class yodesi(Scraper):
         shows = []
         h = HTMLParser.HTMLParser()
         html = requests.get(iurl, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'class':'tab_container'})
+        mlink = SoupStrainer('div', {'id':'content_box'})
         mdiv = BeautifulSoup(html, parseOnlyThese=mlink)
         items = mdiv.findAll('div', {'class':re.compile('^one_')})
         for item in items:
@@ -76,7 +76,7 @@ class yodesi(Scraper):
             search_text = urllib.quote_plus(search_text)
             url = url + search_text
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'id':'page'})
+        mlink = SoupStrainer('div', {'class':'main-container'})
         mdiv = BeautifulSoup(html, parseOnlyThese=mlink)
         plink = SoupStrainer('nav', {'role':'navigation'})
         Paginator = BeautifulSoup(html, parseOnlyThese=plink)
@@ -107,7 +107,7 @@ class yodesi(Scraper):
         videos = []
         h = HTMLParser.HTMLParser()    
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'class':'thecontent'})
+        mlink = SoupStrainer('div', {'class':re.compile('^post-single-content')})
         videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
 
         try:
@@ -119,7 +119,7 @@ class yodesi(Scraper):
             pass
 
         try:
-            links = videoclass.findAll('a')
+            links = videoclass.findAll('a', {'target':'_blank'})
             for link in links:
                 vidurl = link.get('href')
                 vidtxt = h.unescape(link.text)

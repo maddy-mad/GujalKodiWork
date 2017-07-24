@@ -23,7 +23,7 @@ import HTMLParser
 class redm(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://redmovies.me/category/'
+        self.bu = 'http://redmovies.co/category/'
         self.icon = self.ipath + 'redm.png'
         self.list = {'01Tamil Movies': self.bu + 'tamil/',
                      '02Telugu Movies': self.bu + 'telugu/',

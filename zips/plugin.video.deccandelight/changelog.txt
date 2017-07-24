@@ -1,3 +1,7 @@
+[B]Version 1.2.6 - 24 Jul 2017[/B]
+- Yodesi Fix
+- MovieFK Fix
+
 [B]Version 1.2.5 - 20 Jul 2017[/B]
 - Tamilgun scraper improvement
 - Mersalaayitten Fix
