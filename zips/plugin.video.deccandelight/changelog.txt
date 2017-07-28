@@ -1,3 +1,6 @@
+[B]Version 1.2.7 - 28 Jul 2017[/B]
+- APKLand Live TV Fix
+
 [B]Version 1.2.6 - 24 Jul 2017[/B]
 - Yodesi Fix
 - MovieFK Fix

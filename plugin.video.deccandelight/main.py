@@ -575,10 +575,10 @@ def play_video(iurl):
     :param path: str
     """
     streamer_list = ['tamilgun', 'mersalaayitten', 'mhdtvlive.',
-                     'tamiltvsite.', 'cloudspro.', 'abroadindia.',
+                     'watchtamiltv.', 'cloudspro.', 'abroadindia.',
                      'hindigeetmala.','.mp4', 'googlevideo.', 
-                     'tamilhdtv.', 'andhrawatch.', '.m3u8',
-                     'justmoviesonline.', '.mp3', 'ozee.']
+                     'tamilhdtv.', 'andhrawatch.', 'tamiltvsite.',
+                     'justmoviesonline.', '.mp3', 'ozee.', '.m3u8']
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=iurl)
     vid_url = play_item.getfilename()
@@ -608,7 +608,7 @@ def play_video(iurl):
                 if 'youtube.' in stream_url:
                     stream_url = resolve_url(stream_url)
                 play_item.setPath(stream_url)
-        elif 'tamiltvsite.' in vid_url or 'tamilhdtv.' in vid_url:
+        elif 'watchtamiltv.' in vid_url or 'tamilhdtv.' in vid_url or 'tamiltvsite.' in vid_url:
             scraper = resources.scrapers.tamiltv.tamiltv()
             stream_url = scraper.get_video(vid_url)
             if stream_url:
