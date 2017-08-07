@@ -1,3 +1,6 @@
+[B]Version 1.2.8 - 07 Aug 2017[/B]
+- MHDTVLive Fix
+
 [B]Version 1.2.7 - 28 Jul 2017[/B]
 - APKLand Live TV Fix
 

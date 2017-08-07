@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.deccandelight"
-version="1.2.7"
+version="1.2.8"
 name="Deccan Delight"
 provider-name="Gujal">
 <requires>
@@ -23,8 +23,8 @@ provider-name="Gujal">
 	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.
 DeccanDelight is and always will be free and open-source. None of its code and resources may be sold or redistributed for any commercial purposes.
 DeccanDelight and its developers do not host, create, or distribute any of the content displayed in the addon, it simply scrapes public websites.</disclaimer>
-	<news>[B]Version 1.2.7 - 28 Jul 2017[/B]
-- APKLand Live TV Fix
+	<news>[B]Version 1.2.8 - 07 Aug 2017[/B]
+- MHDTVLive Fix
 	</news>
 	<assets>
 		<icon>icon.png</icon>

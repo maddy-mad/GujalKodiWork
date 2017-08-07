@@ -1,3 +1,29 @@
+[B]Version 1.2.8 - 07 Aug 2017[/B]
+- MHDTVLive Fix
+
+[B]Version 1.2.7 - 28 Jul 2017[/B]
+- APKLand Live TV Fix
+
+[B]Version 1.2.6 - 24 Jul 2017[/B]
+- Yodesi Fix
+- MovieFK Fix
+
+[B]Version 1.2.5 - 20 Jul 2017[/B]
+- Tamilgun scraper improvement
+- Mersalaayitten Fix
+
+[B]Version 1.2.4 - 25 Jun 2017[/B]
+- Tamilgun Domain change
+- TamilYogi Fix
+
+[B]Version 1.2.3 - 28 May 2017[/B]
+- Tamilgun Domain change
+- Tamilrasigan Fix
+
+[B]Version 1.2.2 - 26 May 2017[/B]
+- Desi Tashan Fix
+- Yodesi Fix
+
 [B]Version 1.2.1 - 21 May 2017[/B]
 - ABCMalayalam Fix
 - Mersalaayitten Fix

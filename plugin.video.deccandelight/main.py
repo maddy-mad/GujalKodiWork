@@ -616,10 +616,13 @@ def play_video(iurl):
                     stream_url = resolve_url(stream_url)
                 play_item.setPath(stream_url)
         elif 'mhdtvlive.' in vid_url:
-            scraper = resources.scrapers.lmtv.lmtv()
+            scraper = resources.scrapers.mhdtv.mhdtv()
             stream_url = scraper.get_video(vid_url)
             if 'youtube.' in stream_url:
                 stream_url = resolve_url(stream_url)
+            # elif 'User-Agent' not in stream_url:
+                # qurl = urllib.quote_plus(stream_url)
+                # stream_url = 'plugin://plugin.video.f4mTester/?streamtype=HLS&url=%s'%qurl
             play_item.setPath(stream_url)
         elif 'abroadindia.' in vid_url:
             scraper = resources.scrapers.aindia.aindia()

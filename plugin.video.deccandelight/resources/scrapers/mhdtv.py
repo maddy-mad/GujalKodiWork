@@ -25,12 +25,16 @@ class mhdtv(Scraper):
         Scraper.__init__(self)
         self.bu = 'http://mhdtvlive.com/'
         self.icon = self.ipath + 'mhdtv.png'
-        self.list = {'01Tamil TV': self.bu + 'tamil_channels',
+        self.list = {'01Tamil TV': self.bu + 'tamil-tvs',
                      '02Telugu TV': self.bu + 'telugu_channels',
                      '03Malayalam TV': self.bu + 'malayalam_channels',
                      '04Kannada TV': self.bu + 'kannada_channels',
-                     '05Hindi TV': self.bu + 'hindi_channels',
-                     '06English TV': self.bu + 'english_channels'}
+                     '05Hindi TV': self.bu + 'hindi_tvs',
+                     '06English TV': self.bu + 'english_channels',
+                     '07Sports TV': self.bu + 'sport',
+                     '08Marathi TV': self.bu + 'marathi-channels',
+                     '09Punjabi TV': self.bu + 'punjabi-channels',
+                     '10Bangla TV': self.bu + 'bangla-channels'}
             
     def get_menu(self):
         return (self.list,7,self.icon)
@@ -71,7 +75,12 @@ class mhdtv(Scraper):
                 if 'unescape(' in html:
                     strdata = re.findall("unescape\('(.*?)'", html)[0]
                     html = urllib.unquote(strdata)
-                stream_url = re.findall('stream = "(.*?)"',html)[0]
+                if 'stream =' in html:
+                    stream_url = re.findall('stream = "(.*?)"',html)[0]
+                elif 'sv = "' in html:
+                    stream_url = re.findall('sv\s*=\s*"(.*?)"',html)[0]
+                else:
+                    stream_url = re.findall("source:\s*'([^']+)",html)[0]
             elif 'yupptv.' in tlink:
                 html = requests.get(tlink, headers=self.hdr).text
                 stream_url = re.findall("file:\s?'(.*?m3u8.*?')",html)[0] + '|User-Agent=Mozilla/5.0 (yupp_andro_mob)'
