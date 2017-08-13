@@ -20,7 +20,7 @@ provider-name="Gujal">
 </addon>
 
 <addon id="plugin.video.deccandelight"
-version="1.2.8"
+version="1.2.9"
 name="Deccan Delight"
 provider-name="Gujal">
 <requires>
@@ -28,7 +28,6 @@ provider-name="Gujal">
   <import addon="script.module.requests" version="2.4.3"/>
   <import addon="script.module.beautifulsoup" version="3.2.1"/>
   <import addon="script.common.plugin.cache" version="2.5.5"/>
-  <import addon="script.module.urlresolver" version="3.0.0"/>
   <import addon="script.module.urlresolver" version="3.0.0"/>
   <import addon="plugin.video.f4mTester" version="2.2.3"/>
 </requires>
@@ -39,12 +38,14 @@ provider-name="Gujal">
 	<summary>Entertainment from the Deccan region of India</summary>
 	<description>This addon provides access to entertainment in various Deccan languages such as Tamil, Telugu, Malayalam, Kannada, and Hindi</description>
 	<platform>all</platform>
-	<website>https://www.tvaddons.co/forums/addon-releases/49105-deccan-delight-indian-entertainment.html</website>
+	<website>https://github.com/Gujal00</website>
 	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.
 DeccanDelight is and always will be free and open-source. None of its code and resources may be sold or redistributed for any commercial purposes.
 DeccanDelight and its developers do not host, create, or distribute any of the content displayed in the addon, it simply scrapes public websites.</disclaimer>
-	<news>[B]Version 1.2.8 - 07 Aug 2017[/B]
-- MHDTVLive Fix
+	<news>[B]Version 1.2.9 - 13 Aug 2017[/B]
+- Mersalaayitten Fix
+- Removed LiveMalayalam TV as it has been merged into MHDTV
+- Remove apnaview and malayalam serials as the sites are defunct
 	</news>
 	<assets>
 		<icon>icon.png</icon>

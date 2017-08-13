@@ -1,3 +1,14 @@
+[B]Version 1.2.9 - 13 Aug 2017[/B]
+- Mersalaayitten Fix
+- Removed LiveMalayalam TV as it has been merged into MHDTV
+- Remove apnaview and malayalam serials as the sites are defunct
+
+[B]Version 1.2.8 - 07 Aug 2017[/B]
+- MHDTVLive Fix
+
+[B]Version 1.2.7 - 28 Jul 2017[/B]
+- APKLand Live TV Fix
+
 [B]Version 1.2.6 - 24 Jul 2017[/B]
 - Yodesi Fix
 - MovieFK Fix
