@@ -29,7 +29,7 @@ class tamiltv(Scraper):
                      '03News Channels': self.bu + 'browse-tamil-news-videos-1-title.html',
                      '04HD Channels': self.bu + 'browse-tamil-hd-videos-1-title.html',
                      '05Devotional Channels': self.bu + 'browse-tamil-devotional-tv-videos-1-title.html',
-                     '06 VOD TV Channel Shows': 'http://www.tamiltvsite.com/vod/mindex.phpMMMM4',
+                     '06 VOD TV Channel Shows': self.bu + 'vod/mindex.phpMMMM4',
                      '07[COLOR yellow]** Search **[/COLOR]': self.bu + 'search.php?keywords='}
   
     def get_menu(self):
@@ -67,7 +67,7 @@ class tamiltv(Scraper):
         for item in items:
             title = item
             icon = self.icon
-            url = 'http://www.tamiltvsite.com/channels/get_vod.php?tag=%s&date=%sZZZZ%s'%(ctag,item,cname)
+            url = self.bu + 'channels/get_vod.php?tag=%s&date=%sZZZZ%s'%(ctag,item,cname)
             categories.append((title,icon,url))
     
         return (categories,7)
@@ -84,7 +84,7 @@ class tamiltv(Scraper):
             channel = iurl.split('ZZZZ')[1]
             mozhdr = self.hdr
             mozhdr['X-Requested-With'] = 'XMLHttpRequest'
-            mozhdr['Referer'] = 'http://www.tamiltvsite.com/'
+            mozhdr['Referer'] = self.bu
             items = requests.get(url, headers=mozhdr).json()['channels']
             for item in items:
                 title = item['name']
