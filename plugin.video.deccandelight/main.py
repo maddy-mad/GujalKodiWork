@@ -142,7 +142,7 @@ class Scraper(object):
             except:
                 pass
             try:
-                strurl = re.findall('src="(.*?)"',src.decode('base64'))[0]
+                strurl = re.findall('''source src=["'](.*?)['"]''',src.decode('base64'))[0]
                 vidhost = self.get_vidhost(strurl)
                 videos.append((vidhost,strurl))
             except:
@@ -327,8 +327,6 @@ sites = {'01tgun': 'Tamil Gun : [COLOR yellow]Tamil[/COLOR]',
          '11awatch': 'Andhra Watch : [COLOR yellow]Telugu[/COLOR]',
          '21abcm': 'ABC Malayalam : [COLOR yellow]Malayalam[/COLOR]',
          '22olangal': 'Olangal : [COLOR yellow]Malayalam[/COLOR]',
-#         '23lmtv': 'Live Malayalam : [COLOR yellow]Malayalam Live TV[/COLOR]',
-#         '24mserial': 'Malayalam Serials : [COLOR yellow]Malayalam Catchup TV[/COLOR]',
          '41hlinks': 'Hindi Links 4U : [COLOR yellow]Hindi[/COLOR]',
          '42desit': 'Desi Tashan : [COLOR yellow]Hindi Catchup TV[/COLOR]',
          '43yodesi': 'Yo Desi : [COLOR yellow]Hindi Catchup TV[/COLOR]',
@@ -336,7 +334,6 @@ sites = {'01tgun': 'Tamil Gun : [COLOR yellow]Tamil[/COLOR]',
          '51mhdtv': 'MHDTV Live : [COLOR magenta]Various Live TV[/COLOR]',
          '52aindia': 'Abroad India : [COLOR magenta]Various Live TV[/COLOR]',
          '53ozee': 'OZee : [COLOR magenta]Various Catchup TV[/COLOR]',
-#         '61apnav': 'Apna View : [COLOR magenta]Various[/COLOR]',
          '62tvcd': 'Thiruttu VCD : [COLOR magenta]Various[/COLOR]',
          '63mrulz': 'Movie Rulz : [COLOR magenta]Various[/COLOR]',
          '64i4movie': 'India 4 Movie : [COLOR magenta]Various[/COLOR]',
@@ -576,9 +573,10 @@ def play_video(iurl):
     """
     streamer_list = ['tamilgun', 'mersalaayitten', 'mhdtvlive.',
                      'watchtamiltv.', 'cloudspro.', 'abroadindia.',
-                     'hindigeetmala.','.mp4', 'googlevideo.', 
+                     'hindigeetmala.','.mp4', 'googlevideo.', '/hls/',
                      'tamilhdtv.', 'andhrawatch.', 'tamiltvsite.',
-                     'justmoviesonline.', '.mp3', 'ozee.', '.m3u8']
+                     'justmoviesonline.', '.mp3', 'googleapis.',
+                     'ozee.', '.m3u8']
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=iurl)
     vid_url = play_item.getfilename()

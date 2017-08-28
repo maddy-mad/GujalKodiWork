@@ -14,8 +14,6 @@
     </category> 
     <category label="Malayalam Scrapers">
         <setting id="abcm" type="bool" label="ABC Malayalam" default="true"/>
-        <setting id="lmtv" type="bool" label="Live Malayalam" default="true"/>
-		<setting id="mserial" type="bool" label="Malayalam Serials" default="true"/>
 		<setting id="olangal" type="bool" label="Olangal" default="true"/>
     </category> 
     <category label="Hindi Scrapers">
@@ -27,7 +25,6 @@
     <category label="Multi Language Scrapers">
 		<setting id="mhdtv" type="bool" label="MHDTV Live" default="true"/>
 		<setting id="aindia" type="bool" label="Abroad India" default="true"/>
-		<setting id="apnav" type="bool" label="Apna View" default="true"/>
 		<setting id="flinks" type="bool" label="Film Links 4 U" default="true"/>
 		<setting id="i4movie" type="bool" label="India 4 Movie" default="true"/>
 		<setting id="mersal" type="bool" label="Mersalaayitten" default="true"/>

@@ -23,14 +23,15 @@ import HTMLParser
 class runt(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://runtamil.co/category/'
+        self.bu = 'http://runtamil.tv/category/'
         self.icon = self.ipath + 'runt.png'
         self.list = {'01Tamil New Movies': self.bu + 'runtamil-new-tamil-movies2o1/',
                      '02Tamil HD Movies': self.bu + 'tamil-hd-movies-online/',
                      '03Tamil DVD Movies': self.bu + 'tamil-dvd-movies1/',
                      '04Tamil Classic Movies': self.bu + 'mid-movies/',
-                     '05Tamil Dubbed Movies': self.bu + 'runtamil-tamil-dubbed-movies/',
-                     '06[COLOR yellow]** Search **[/COLOR]': self.bu[:-9] + '?s='}
+                     '05Tamil Old Movies': self.bu + 'old-tamil-movies/',
+                     '06Tamil Dubbed Movies': self.bu + 'runtamil-tamil-dubbed-movies/',
+                     '99[COLOR yellow]** Search **[/COLOR]': self.bu[:-9] + '?s='}
 
     def get_menu(self):
         return (self.list,7,self.icon)
@@ -44,27 +45,26 @@ class runt(Scraper):
             url = url + search_text
 
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'class':re.compile('^film-content')})
+        mlink = SoupStrainer('div', {'id':'archive-posts'})
         mdiv = BeautifulSoup(html, parseOnlyThese=mlink)
-        plink = SoupStrainer('div', {'class':re.compile('^navigation')})
+        plink = SoupStrainer('div', {'class':'wp-pagenavi'})
         Paginator = BeautifulSoup(html, parseOnlyThese=plink)
-        items = mdiv.findAll('div', {'class':'movie-preview-content'})
+        items = mdiv.findAll('div', {'class':re.compile('^entry ')})
         
         for item in items:
-            title = h.unescape(item.find('span', {'class':'movie-title'}).text)
+            title = h.unescape(item.h3.text)
             title = self.clean_title(title)
             url = item.find('a')['href']
-            thumb = item.find('img')['src']
+            try:
+                thumb = item.find('img')['src']
+            except:
+                thumb = self.icon
             movies.append((title, thumb, url))
         
-        if 'Next' in str(Paginator):
-            pdiv = Paginator.find('div', {'class':'naviright'})
-            purl = pdiv.a.get('href')
-            currpg = Paginator.find('span', {'class':'current'}).text
-            pgdiv = Paginator.find('div', {'class':'navicenter'})
-            pages = pgdiv.findAll('a')
-            lastpg = pages[len(pages)-1].text
-            title = 'Next Page.. (Currently in Page %s of %s)' % (currpg,lastpg)
+        if 'next' in str(Paginator):
+            currpg = Paginator.find('span', {'class':'pages'}).text
+            purl = Paginator.find('a', {'class':re.compile('next')}).get('href')
+            title = 'Next Page.. (Currently in %s)'%currpg
             movies.append((title, self.nicon, purl))
         
         return (movies,8)
@@ -73,33 +73,44 @@ class runt(Scraper):
         videos = []
             
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'class':'video-content'})
+        mlink = SoupStrainer('div', {'class':re.compile('^entry-content')})
         videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
 
         try:
             links = videoclass.findAll('iframe')
             for link in links:
                 vidurl = link.get('src')
-                if ('runtamil' in vidurl):
+                if ('runtamil' in vidurl) or ('tamildrive' in vidurl):
                     headers = self.hdr
                     headers['Referer'] = url
                     slink = requests.get(vidurl, headers=headers).text
-                    hoster = 'RunTamil '
                     srclist = re.findall('(\[.*?\])', slink)[0]
+                    if '"file"' not in srclist:
+                        srclist = srclist.replace('file','"file"').replace('label','"label"')
                     strlinks = eval(srclist)
                     for strlink in strlinks:
                         elink = strlink['file']
-                        elink = urllib.quote_plus(elink)
-                        try:
-                            qual = strlink['label']
-                        except:
-                            qual = 'HLS'
-                        vidhost = hoster + qual
-                        videos.append((vidhost,elink))
+                        if 'manifest' not in elink:
+                            hoster = self.get_vidhost(elink)
+                            elink = urllib.quote_plus(elink)
+                            try:
+                                qual = strlink['label']
+                            except:
+                                qual = 'HLS'
+                            vidhost = '%s | %s'%(hoster,qual)
+                            videos.append((vidhost,elink))
                 else:
                     self.resolve_media(vidurl,videos)
 
         except:
             pass
-      
+
+        try:
+            link = videoclass.find('div', {'class':'pretty-embed'}).get('data-pe-videoid')
+            vidurl = 'https://www.youtube.com/embed/%s'%link
+            self.resolve_media(vidurl,videos)
+
+        except:
+            pass
+            
         return videos
