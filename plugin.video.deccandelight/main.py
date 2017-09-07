@@ -95,7 +95,7 @@ class Scraper(object):
                         'm2pub', 'abcmalayalam', 'india4movie.co', '.filmlinks4u',
                         'tamilraja.', 'multiup.', 'filesupload.', 'fileorbs.',
                         'insurance-donate.', '.blogspot.', 'yodesi.net', 'desi-tashan.',
-                        'yomasti.co/ads', 'ads.yodesi.net', 'business-tv.me/ads']
+                        'yomasti.co/ads', 'ads.yodesi', 'business-tv.me/ads']
 
         embed_list = ['cineview', 'bollyheaven', 'videolinkz', 'vidzcode',
                       'embedzone', 'embedsr', 'fullmovie-hd', 'adly.biz',
@@ -218,9 +218,11 @@ class Scraper(object):
             clink = requests.get(url, headers=mozhdr).text
             csoup = BeautifulSoup(clink)
             try:
-                for link in csoup.findAll('iframe'):
-                    strurl = link.get('src')
+                links = re.findall('''(?i)<iframe.+?src=["']([^'"]+)''', clink)
+                for strurl in links:
+                    xbmc.log('-------> Scraped link : %s' % strurl)
                     if not any([x in strurl for x in non_str_list]):
+                        xbmc.log('-------> sending to URLResolver for checking : %s' % strurl)
                         if urlresolver.HostedMediaFile(strurl):
                             vidhost = self.get_vidhost(strurl)
                             if not vidtxt == '':
@@ -334,6 +336,7 @@ sites = {'01tgun': 'Tamil Gun : [COLOR yellow]Tamil[/COLOR]',
          '51mhdtv': 'MHDTV Live : [COLOR magenta]Various Live TV[/COLOR]',
          '52aindia': 'Abroad India : [COLOR magenta]Various Live TV[/COLOR]',
          '53ozee': 'OZee : [COLOR magenta]Various Catchup TV[/COLOR]',
+         '61bmov': 'Bharat Movies : [COLOR magenta]Various[/COLOR]',
          '62tvcd': 'Thiruttu VCD : [COLOR magenta]Various[/COLOR]',
          '63mrulz': 'Movie Rulz : [COLOR magenta]Various[/COLOR]',
          '64i4movie': 'India 4 Movie : [COLOR magenta]Various[/COLOR]',
@@ -352,7 +355,6 @@ import resources.scrapers.runt
 import resources.scrapers.abcm
 import resources.scrapers.olangal
 import resources.scrapers.mersal
-import resources.scrapers.lmtv
 import resources.scrapers.tvcd
 import resources.scrapers.tamiltv
 import resources.scrapers.ttvs
@@ -367,14 +369,13 @@ import resources.scrapers.tvcds
 import resources.scrapers.flinks
 import resources.scrapers.hlinks
 import resources.scrapers.desit
-import resources.scrapers.apnav
 import resources.scrapers.aindia
-import resources.scrapers.mserial
 import resources.scrapers.gmala
 import resources.scrapers.awatch
 import resources.scrapers.ozee
 import resources.scrapers.rasigan
 import resources.scrapers.mhdtv
+import resources.scrapers.bmov
 
 def list_sites():
     """
@@ -576,7 +577,7 @@ def play_video(iurl):
                      'hindigeetmala.','.mp4', 'googlevideo.', '/hls/',
                      'tamilhdtv.', 'andhrawatch.', 'tamiltvsite.',
                      'justmoviesonline.', '.mp3', 'googleapis.',
-                     'ozee.', '.m3u8']
+                     'ozee.', 'bharat-movies.', '.m3u8']
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=iurl)
     vid_url = play_item.getfilename()
@@ -594,6 +595,15 @@ def play_video(iurl):
                 if 'youtube.' in stream_url:
                     stream_url = resolve_url(stream_url)
                 play_item.setPath(stream_url)
+        elif 'bharat-movies.' in vid_url:
+            scraper = resources.scrapers.bmov.bmov()
+            stream_url = scraper.get_video(vid_url)
+            if stream_url:
+                stream_url = resolve_url(stream_url)
+                if stream_url:
+                    play_item.setPath(stream_url)
+                else:
+                    play_item.setPath(None)
         elif 'ozee.' in vid_url:
             scraper = resources.scrapers.ozee.ozee()
             stream_url = scraper.get_video(vid_url)

@@ -25,6 +25,7 @@
     <category label="Multi Language Scrapers">
 		<setting id="mhdtv" type="bool" label="MHDTV Live" default="true"/>
 		<setting id="aindia" type="bool" label="Abroad India" default="true"/>
+		<setting id="bmov" type="bool" label="Bharat Movies" default="true"/>
 		<setting id="flinks" type="bool" label="Film Links 4 U" default="true"/>
 		<setting id="i4movie" type="bool" label="India 4 Movie" default="true"/>
 		<setting id="mersal" type="bool" label="Mersalaayitten" default="true"/>
