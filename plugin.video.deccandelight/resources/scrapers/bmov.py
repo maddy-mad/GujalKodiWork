@@ -39,7 +39,7 @@ class bmov(Scraper):
         menus = []
         
         title = 'Movies by Name'
-        url = '%s%s/info/moviepages.htm'%(self.bu,iurl)
+        url = '%s%s/movies/list.htm'%(self.bu,iurl)
         menus.append((title,self.icon,url))
         
         if 'bengali' not in iurl:
@@ -65,13 +65,13 @@ class bmov(Scraper):
     def get_items(self,iurl):
         movies = []
         h = HTMLParser.HTMLParser()
-        html = requests.get(iurl).text
+        html = requests.get(iurl, headers=self.hdr).text
         items = re.findall('id=L[12].+?href=([^>]+)>([^<]+)',html)
         burl = re.findall('(.+/)',iurl)[0]
         for item in items:
             title = h.unescape(item[1])
             title = title.strip().encode('utf8')
-            url = burl + item[0]       
+            url = burl + item[0]
             movies.append((title,self.icon,url))
    
         return (movies,9) 

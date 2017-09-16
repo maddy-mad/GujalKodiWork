@@ -133,20 +133,32 @@ class Scraper(object):
 
         elif 'justmoviesonline.com' in url:
             html = requests.get(url, headers=mozhdr).text
-            src = re.findall("atob\('(.*?)'",html)[0]
-            try:
-                strurl = re.findall('file":"(.*?)"',src.decode('base64'))[0]
+            src = re.search("atob\('(.*?)'",html)
+            if src:
+                src = src.group(1)
+                try:
+                    strurl = re.findall('file":"(.*?)"',src.decode('base64'))[0]
+                    vidhost = 'GVideo'
+                    strurl = urllib.quote_plus(strurl)
+                    videos.append((vidhost,strurl))
+                except:
+                    pass
+                try:
+                    strurl = re.findall('''source src=["'](.*?)['"]''',src.decode('base64'))[0]
+                    vidhost = self.get_vidhost(strurl)
+                    videos.append((vidhost,strurl))
+                except:
+                    pass
+            elif '?id=' in url:
+                src = eval(re.findall('Loading.+?var.+?=([^;]+)',html,re.DOTALL)[0])
+                for item in src:
+                    if 'http' in item and 'justmovies' not in item:
+                        strurl = item
+                strurl += url.split('?id=')[1]
+                strurl += '.mp4'
                 vidhost = 'GVideo'
                 strurl = urllib.quote_plus(strurl)
                 videos.append((vidhost,strurl))
-            except:
-                pass
-            try:
-                strurl = re.findall('''source src=["'](.*?)['"]''',src.decode('base64'))[0]
-                vidhost = self.get_vidhost(strurl)
-                videos.append((vidhost,strurl))
-            except:
-                pass
             
         elif 'videohost.site' in url or 'videohost1.com' in url:
             try:
