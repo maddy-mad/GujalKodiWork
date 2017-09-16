@@ -17,6 +17,8 @@ import SimpleDownloader
 import requests
 import pickle
 from operator import itemgetter
+from HTMLParser import HTMLParser
+
 familyFilter = "1"
 socket.setdefaulttimeout(60)
 pluginhandle = int(sys.argv[1])
@@ -47,6 +49,23 @@ itemsPage = ["25", "50", "75", "100"]
 itemsPerPage = itemsPage[int(itemsPerPage)]
 urlMain = "https://api.dailymotion.com"
 
+
+
+class MLStripper(HTMLParser):
+    def __init__(self):
+        self.reset()
+        self.fed = []
+    def handle_data(self, d):
+        self.fed.append(d)
+    def get_data(self):
+        return ''.join(self.fed)
+
+def strip_tags(html):
+    parser = HTMLParser()
+    html = parser.unescape(html)
+    s = MLStripper()
+    s.feed(html)
+    return s.get_data()
 
 def index():
     if dmUser:
@@ -161,7 +180,7 @@ def listVideos(url):
     for item in content['list']:
         id = item['id']
         title = item['title'].encode('utf-8')
-        desc = item['description'].encode('utf-8')
+        desc = strip_tags(item['description']).encode('utf-8')
         duration = item['duration']
         user = item['owner.username']
         date = item['taken_time']
