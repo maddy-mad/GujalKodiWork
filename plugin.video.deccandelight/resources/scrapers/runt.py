@@ -45,14 +45,14 @@ class runt(Scraper):
             url = url + search_text
 
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'id':'archive-posts'})
+        mlink = SoupStrainer('div', {'class':re.compile('^movie-preview ')})
         mdiv = BeautifulSoup(html, parseOnlyThese=mlink)
-        plink = SoupStrainer('div', {'class':'wp-pagenavi'})
+        plink = SoupStrainer('div', {'class':re.compile('^navigation')})
         Paginator = BeautifulSoup(html, parseOnlyThese=plink)
-        items = mdiv.findAll('div', {'class':re.compile('^entry ')})
+        items = mdiv.findAll('div', {'class':'movie-preview-content'})
         
         for item in items:
-            title = h.unescape(item.h3.text)
+            title = h.unescape(item.find('span', {'class':'movie-title'}).text)
             title = self.clean_title(title)
             url = item.find('a')['href']
             try:
@@ -61,10 +61,11 @@ class runt(Scraper):
                 thumb = self.icon
             movies.append((title, thumb, url))
         
-        if 'next' in str(Paginator):
-            currpg = Paginator.find('span', {'class':'pages'}).text
-            purl = Paginator.find('a', {'class':re.compile('next')}).get('href')
-            title = 'Next Page.. (Currently in %s)'%currpg
+        if 'Next' in str(Paginator):
+            currpg = Paginator.find('span', {'class':'current'}).text
+            purl = Paginator.find('div', {'class':'naviright'}).find('a')['href']
+            lastpg = Paginator.find('a', {'class':'last'}).text
+            title = 'Next Page.. (Currently in %s of %s)'%(currpg, lastpg)
             movies.append((title, self.nicon, purl))
         
         return (movies,8)
@@ -73,7 +74,7 @@ class runt(Scraper):
         videos = []
             
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'class':re.compile('^entry-content')})
+        mlink = SoupStrainer('div', {'class':'video-content'})
         videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
 
         try:

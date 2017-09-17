@@ -17,24 +17,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 from main import Scraper
 from BeautifulSoup import BeautifulSoup, SoupStrainer
-import urllib, re, requests
+import urllib, re, requests, time
 import HTMLParser
 
 class mhdtv(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://mhdtvlive.com/'
+        self.bu = 'http://mhdtvlive.co.in/'
         self.icon = self.ipath + 'mhdtv.png'
-        self.list = {'01Tamil TV': self.bu + 'tamil-tvs',
-                     '02Telugu TV': self.bu + 'telugu_channels',
-                     '03Malayalam TV': self.bu + 'malayalam_channels',
-                     '04Kannada TV': self.bu + 'kannada_channels',
-                     '05Hindi TV': self.bu + 'hindi_tvs',
-                     '06English TV': self.bu + 'english_channels',
-                     '07Sports TV': self.bu + 'sport',
-                     '08Marathi TV': self.bu + 'marathi-channels',
-                     '09Punjabi TV': self.bu + 'punjabi-channels',
-                     '10Bangla TV': self.bu + 'bangla-channels'}
+        self.list = {'01Tamil TV': self.bu + 'tamil-channels/',
+                     '02Telugu TV': self.bu + 'telugu-channels/',
+                     '03Malayalam TV': self.bu + 'malayalam-channels/',
+                     '04Kannada TV': self.bu + 'kannada-channels/',
+                     '05Hindi TV': self.bu + 'hindi-channels/',
+                     '06English TV': self.bu + 'english-channels/',
+                     '07Sports TV': self.bu + 'sports-channels/',
+                     '08Marathi TV': self.bu + 'marathi-channels/',
+                     '09Punjabi TV': self.bu + 'punjabi-channels/',
+                     '10Bangla TV': self.bu + 'bangla-channels/'}
             
     def get_menu(self):
         return (self.list,7,self.icon)
@@ -50,7 +50,7 @@ class mhdtv(Scraper):
             html = requests.get(iurl, headers=self.hdr).text
             mdiv = BeautifulSoup(html, parseOnlyThese=mlink)
             Paginator = BeautifulSoup(html, parseOnlyThese=plink)
-            items = mdiv.findAll('div', {'class':re.compile('^col-sm-')})
+            items = mdiv.findAll('div', {'class':re.compile('^col-md-2')})
             for item in items:
                 title = h.unescape(item.h3.text).encode('utf8')
                 url = item.find('a')['href']
@@ -79,11 +79,25 @@ class mhdtv(Scraper):
                     stream_url = re.findall('stream = "(.*?)"',html)[0]
                 elif 'sv = "' in html:
                     stream_url = re.findall('sv\s*=\s*"(.*?)"',html)[0]
+                elif 'vodobox.' in html:
+                    stream_url = urllib.unquote(re.findall('vid=([^&]+)',html)[0])
+                elif 'nexgtv.' in html:
+                    nlink = re.findall('iframe.+src="([^"]+)',html)[0]
+                    html = requests.get(nlink, headers=self.hdr).text
+                    chid = re.findall("getSecurePlayUrl\('([^']+)",html)[0]
+                    surl = 'https://m.nexgtv.com/users/getsecureplayurl/%s?_=%s'%(chid,int(round(time.time() * 1000)))
+                    html = requests.get(surl, headers=self.hdr).json()
+                    surl = html['finalUrl']
+                    html = requests.get(surl, headers=self.hdr).text
+                    stream_url = re.findall('(http.+)',html)[-1]
                 else:
                     stream_url = re.findall("source:\s*'([^']+)",html)[0]
-            elif 'yupptv.' in tlink:
-                html = requests.get(tlink, headers=self.hdr).text
-                stream_url = re.findall("file:\s?'(.*?m3u8.*?')",html)[0] + '|User-Agent=Mozilla/5.0 (yupp_andro_mob)'
+            elif 'yupptv.' in tlink or 'apktv.' in tlink:
+                html = requests.get(tlink, headers=self.hdr, verify=False).text
+                stream_url = re.findall("(?:file|source):\s?'(.*?m3u8.*?)'",html)[0]
+                r = requests.get(stream_url,headers=self.hdr, verify=False)
+                stream_url = re.findall('(http.*)',r.text)[-1]
+                stream_url += '|User-Agent=%s&Cookie=_alid_=%s'%(self.hdr['User-Agent'],r.cookies['_alid_'])
             elif 'youtube.' in tlink:
                 stream_url = tlink
             else:
