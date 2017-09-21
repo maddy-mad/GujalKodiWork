@@ -75,8 +75,8 @@ def index():
     addDir(translation(30006), "", 'listChannels', "")
     addDir(translation(30007), "", 'sortUsers1', "")    
     addDir(translation(30002), "", 'search', "")
-    addDir(translation(30003), urlMain+"/videos?fields=id,thumbnail_large_url%2Ctitle%2Cviews_last_hour&filters=live&sort=visited-hour&limit="+itemsPerPage+"&family_filter="+familyFilter+"&localization="+language+"&page=1", 'listLive', "")
-    addDir(translation(30039), '3D:ALL', 'sortVideos1', '', '')
+    addDir(translation(30003), urlMain+"/videos?fields=id,thumbnail_large_url,title,views_last_hour&availability=1&live_onair=1&sort=visited-hour&limit="+itemsPerPage+"&family_filter="+familyFilter+"&localization="+language+"&page=1", 'listLive', "")
+    #addDir(translation(30039), '3D:ALL', 'sortVideos1', '', '')
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
@@ -298,7 +298,8 @@ def getStreamUrl(id,live=False):
     r = requests.get("http://www.dailymotion.com/player/metadata/video/"+id,headers=headers,cookies=cookie)
     content = r.json()
     if content.get('error') is not None:
-        Error = 'DailyMotion Says:[COLOR yellow]%s[/COLOR]' %(content['error']['title'])
+        #Error = 'DailyMotion Says:[COLOR yellow]%s[/COLOR]' %(content['error']['title'])
+        Error = (content['error']['title'])
         xbmc.executebuiltin('XBMC.Notification(Info:,'+ Error +' ,5000)')
         return
     else:

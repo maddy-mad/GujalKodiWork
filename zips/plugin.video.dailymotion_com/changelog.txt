@@ -1,3 +1,7 @@
+2.2.7
+- Only display active streams in Live menu
+- Remove 3D menu item as it has been deprecated by Dailymotion
+
 2.2.6
 - New logo and French translation by bubuleur
 - Info text cleanup
