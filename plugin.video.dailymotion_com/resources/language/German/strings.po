@@ -124,6 +124,10 @@ msgctxt "#30024"
 msgid "Favourites"
 msgstr ""
 
+msgctxt "#30025"
+msgid "What to Watch"
+msgstr "Was man sich ansehen sollte"
+
 msgctxt "#30028"
 msgid "Add user to favourites"
 msgstr "User zu Favoriten hinzufügen"

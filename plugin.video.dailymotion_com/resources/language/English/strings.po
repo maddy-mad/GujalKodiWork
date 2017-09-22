@@ -125,7 +125,11 @@ msgctxt "#30024"
 msgid "Favourites"
 msgstr ""
 
-#empty strings from id 30025 to 30027
+msgctxt "#30025"
+msgid "What to Watch"
+msgstr ""
+
+#empty strings from id 30026 to 30027
 
 msgctxt "#30028"
 msgid "Add user to favourites"

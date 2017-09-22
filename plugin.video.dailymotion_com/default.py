@@ -24,6 +24,8 @@ socket.setdefaulttimeout(60)
 pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
 addonID = addon.getAddonInfo('id')
+_icon = addon.getAddonInfo('icon')
+_fanart = addon.getAddonInfo('fanart')
 channelFavsFile = xbmc.translatePath("special://profile/addon_data/"+addonID+"/"+addonID+".favorites")
 familyFilterFile = xbmc.translatePath("special://profile/addon_data/"+addonID+"/family_filter_off")
 cookie_file = xbmc.translatePath("special://profile/addon_data/"+addonID+"/cookies")
@@ -68,15 +70,16 @@ def strip_tags(html):
     return s.get_data()
 
 def index():
-    if dmUser:
-        addDir(translation(30034), "", "personalMain", "")
-    else:
-        addFavDir(translation(30024), "", "favouriteUsers", "")
+    addDir(translation(30025), urlMain+"/videos?fields=description,duration,id,owner.username,taken_time,thumbnail_large_url,title,views_total&list=what-to-watch&no_live=1&limit="+itemsPerPage+"&family_filter="+familyFilter+"&localization="+language+"&page=1", 'listVideos', "")
     addDir(translation(30006), "", 'listChannels', "")
     addDir(translation(30007), "", 'sortUsers1', "")    
     addDir(translation(30002), "", 'search', "")
     addDir(translation(30003), urlMain+"/videos?fields=id,thumbnail_large_url,title,views_last_hour&availability=1&live_onair=1&sort=visited-hour&limit="+itemsPerPage+"&family_filter="+familyFilter+"&localization="+language+"&page=1", 'listLive', "")
     #addDir(translation(30039), '3D:ALL', 'sortVideos1', '', '')
+    if dmUser:
+        addDir(translation(30034), "", "personalMain", "")
+    else:
+        addFavDir(translation(30024), "", "favouriteUsers", "")
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
@@ -499,7 +502,10 @@ def parameters_string_to_dict(parameters):
 def addLink(name, url, mode, iconimage, user, desc, duration, date, nr):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
     ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
+    liz = xbmcgui.ListItem(name)
+    liz.setArt({'thumb': iconimage,
+                'icon': _icon,
+                'fanart': _fanart})
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Aired": date, "Duration": duration, "Episode": nr})
     liz.setProperty('IsPlayable', 'true')
     entries = []
@@ -516,7 +522,10 @@ def addLink(name, url, mode, iconimage, user, desc, duration, date, nr):
 def addLiveLink(name, url, mode, iconimage, desc):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
     ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
+    liz = xbmcgui.ListItem(name)
+    liz.setArt({'thumb': iconimage,
+                'icon': _icon,
+                'fanart': _fanart})
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
     liz.setProperty('IsPlayable', 'true')
     ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
@@ -526,7 +535,10 @@ def addLiveLink(name, url, mode, iconimage, desc):
 def addDir(name, url, mode, iconimage, desc=""):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
     ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+    liz = xbmcgui.ListItem(name)
+    liz.setArt({'thumb': iconimage,
+                'icon': _icon,
+                'fanart': _fanart})
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
     ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
     return ok
@@ -547,7 +559,10 @@ def addUserDir(name, url, mode, iconimage, desc):
 def addFavDir(name, url, mode, iconimage):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
     ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+    liz = xbmcgui.ListItem(name)
+    liz.setArt({'thumb': iconimage,
+                'icon': _icon,
+                'fanart': _fanart})
     liz.setInfo(type="Video", infoLabels={"Title": name})
     liz.addContextMenuItems([(translation(30033), 'XBMC.RunPlugin(plugin://plugin.video.dailymotion_com/?mode=addFav)',)])
     ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
