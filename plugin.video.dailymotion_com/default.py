@@ -72,7 +72,8 @@ def strip_tags(html):
 def index():
     addDir(translation(30025), urlMain+"/videos?fields=description,duration,id,owner.username,taken_time,thumbnail_large_url,title,views_total&list=what-to-watch&no_live=1&limit="+itemsPerPage+"&family_filter="+familyFilter+"&localization="+language+"&page=1", 'listVideos', "")
     addDir(translation(30006), "", 'listChannels', "")
-    addDir(translation(30007), "", 'sortUsers1', "")    
+    #addDir(translation(30007), "", 'sortUsers1', "")    
+    addDir(translation(30007), urlMain+"/users?fields=username,avatar_large_url,videos_total,views_total&sort=popular&limit="+itemsPerPage+"&family_filter="+familyFilter+"&localization="+language+"&page=1", 'listUsers', "")
     addDir(translation(30002), "", 'search', "")
     addDir(translation(30003), urlMain+"/videos?fields=id,thumbnail_large_url,title,views_last_hour&availability=1&live_onair=1&sort=visited-hour&limit="+itemsPerPage+"&family_filter="+familyFilter+"&localization="+language+"&page=1", 'listLive', "")
     #addDir(translation(30039), '3D:ALL', 'sortVideos1', '', '')

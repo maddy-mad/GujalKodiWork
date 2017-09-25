@@ -1,3 +1,6 @@
+2.2.9
+- Remove deprecated options from User menu
+
 2.2.8
 - List What to Watch section
 
