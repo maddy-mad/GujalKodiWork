@@ -17,6 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 from main import Scraper
 from BeautifulSoup import BeautifulSoup, SoupStrainer
+from resources.lib import unwise
 import urllib, re, requests
 import HTMLParser
 
@@ -90,7 +91,7 @@ class ttvs(Scraper):
             links = videoclass.findAll('iframe')
             for link in links:
                 vidurl = link.get('src')
-                if ('tamiltvtube' in vidurl) or ('videozupload' in vidurl):
+                if 'tamiltvtube' in vidurl:
                     headers = self.hdr
                     headers['Referer'] = url
                     slink = requests.get(vidurl, headers=headers).text
@@ -107,6 +108,22 @@ class ttvs(Scraper):
                             qual = 'HLS'
                         vidhost = hoster + qual
                         videos.append((vidhost,elink))
+                
+                elif 'videozupload' in vidurl:
+                    headers = self.hdr
+                    headers['Referer'] = url
+                    html = requests.get(vidurl, headers=headers).text
+                    match = re.search('id="container"(.+?</script>)', html, re.DOTALL)
+                    if match:
+                        data = match.group(1)
+                        while 'w,i,s,e' in data:
+                            data = unwise.unwise_process(data)
+                        match = re.search("source:\s*'([^']+)", data)
+                        if match:
+                            elink = match.group(1)
+                            vidhost = 'GVideo'
+                            videos.append((vidhost,elink))
+                    
                 else:
                     self.resolve_media(vidurl,videos)
         except:

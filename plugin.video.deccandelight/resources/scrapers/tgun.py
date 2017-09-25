@@ -18,7 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 from main import Scraper
 from BeautifulSoup import BeautifulSoup, SoupStrainer
 import urllib, re, requests, json, HTMLParser
-import resources.lib.jsunpack as jsunpack
+from resources.lib import jsunpack
 
 class tgun(Scraper):
     def __init__(self):
@@ -32,7 +32,7 @@ class tgun(Scraper):
         if r.url != self.bu:
             self.bu = r.url
         items = {}
-        cats = re.findall('id="menu-item-(?!4|5601|5404|6147).*?href="((?=.*categories).*?)">((?!User).*?)<',r.text)
+        cats = re.findall('id="menu-item-(?!4|5404|6147).*?href="((?=.*categories).*?)">((?!User).*?)<',r.text)
         sno = 1
         for cat in cats:
             items['0%s'%sno+h.unescape(cat[1]).encode('utf8')] = cat[0]
