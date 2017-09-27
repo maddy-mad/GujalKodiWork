@@ -19,7 +19,7 @@ provider-name="Gujal">
 </extension>
 </addon>
 
-<addon id="plugin.video.dailymotion_com" name="DailyMotion.com" version="2.2.9" provider-name="AddonScriptorDE, L0RE, Gujal">
+<addon id="plugin.video.dailymotion_com" name="DailyMotion.com" version="2.3.0" provider-name="AddonScriptorDE, alibaba011, L0RE, Gujal">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.simple.downloader" version="1.0.0"/>
