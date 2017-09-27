@@ -290,7 +290,11 @@ def BW_choice(stream):
     if bw_url :
         newlist =  sorted(bw_url, key=itemgetter(0),reverse=True)
         return newlist[0] [1].split('#cell')[0]
-
+def s(elem):
+    if elem[0] == "auto":
+        return 1
+    else:
+        return int(elem[0].split("@")[0])
 def getStreamUrl(id,live=False):
     if familyFilter == "1":
         ff = "on"
@@ -310,16 +314,17 @@ def getStreamUrl(id,live=False):
         cc= content['qualities']  #['380'][0]['url']
 
         cc = cc.items()
-        cc = sorted(cc, reverse=True)
- 
+
+        cc = sorted(cc,key=s,reverse=True)
         m_url = ''
         other_playable_url = []
 
         for source,json_source in cc:
-
+            source = source.split("@")[0]
             for item in json_source:
+            
                 m_url = item.get('url',None)
-                xbmc.log("DAILYMOTION - m_url = %s" %m_url)
+                xbmc.log("DAILYMOTION - m_url = %s" %m_url,xbmc.LOGNOTICE)
                 if m_url:
                     if not live:
 
