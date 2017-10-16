@@ -1,5 +1,10 @@
+2.3.1
+- Fix for m3u8 playback for non live streams
+- Add all supported languages
+- Add Family Filter setting to Settings 
+
 2.3.0
--  fix for 1080@60 and sort the qualities 
+- Fix for 1080@60 and sort the qualities 
 
 2.2.9
 - Remove deprecated options from User menu

@@ -202,8 +202,8 @@ msgid "ViewID"
 msgstr "Vue ID"
 
 msgctxt "#30104"
-msgid "Toggle Family Filter"
-msgstr "Alterner le filtre familial"
+msgid "Filtre parental"
+msgstr ""
 
 msgctxt "#30105"
 msgid "Maximum resolution"

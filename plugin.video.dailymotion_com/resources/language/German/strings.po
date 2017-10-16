@@ -209,7 +209,7 @@ msgid "ViewID"
 msgstr ""
 
 msgctxt "#30104"
-msgid "Toggle Family Filter"
+msgid "Familienfilter"
 msgstr ""
 
 msgctxt "#30105"
