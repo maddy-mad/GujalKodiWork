@@ -214,7 +214,7 @@ msgid "ViewID"
 msgstr ""
 
 msgctxt "#30104"
-msgid "Age Gate"
+msgid "Family Filter"
 msgstr ""
 
 msgctxt "#30105"
@@ -239,4 +239,20 @@ msgstr ""
 
 msgctxt "#30110"
 msgid "Choose download directory in Settings"
+msgstr ""
+
+msgctxt "#30111"
+msgid "General"
+msgstr ""
+
+msgctxt "#30112"
+msgid "Download"
+msgstr ""
+
+msgctxt "#30113"
+msgid "Miscellaneous"
+msgstr ""
+
+msgctxt "#30114"
+msgid "Mature Content"
 msgstr ""

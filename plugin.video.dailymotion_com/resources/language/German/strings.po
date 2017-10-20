@@ -206,11 +206,11 @@ msgstr "View erzwingen"
 
 msgctxt "#30103"
 msgid "ViewID"
-msgstr ""
+msgstr "View ID"
 
 msgctxt "#30104"
-msgid "Familienfilter"
-msgstr ""
+msgid "Family Filter"
+msgstr "Familienfilter"
 
 msgctxt "#30105"
 msgid "Maximum resolution"
@@ -235,3 +235,19 @@ msgstr "Datei existiert bereits"
 msgctxt "#30110"
 msgid "Choose download directory in Settings"
 msgstr "Downloadverzeichnis in dein Einstellungen wählen"
+
+msgctxt "#30111"
+msgid "General"
+msgstr "Allgemeiner"
+
+msgctxt "#30112"
+msgid "Download"
+msgstr "Herunterladen"
+
+msgctxt "#30113"
+msgid "Miscellaneous"
+msgstr "Sonstiges"
+
+msgctxt "#30114"
+msgid "Mature Content"
+msgstr "Reifer Inhalt"

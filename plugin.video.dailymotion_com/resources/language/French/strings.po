@@ -195,15 +195,15 @@ msgstr "Pays"
 
 msgctxt "#30102"
 msgid "Force View"
-msgstr "Forcer vue"
+msgstr "Forcer l'affichage"
 
 msgctxt "#30103"
 msgid "ViewID"
-msgstr "Vue ID"
+msgstr "Affichage ID"
 
 msgctxt "#30104"
-msgid "Filtre parental"
-msgstr ""
+msgid "Family Filter"
+msgstr "Filtre parental"
 
 msgctxt "#30105"
 msgid "Maximum resolution"
@@ -228,3 +228,19 @@ msgstr "Le fichier existe déjà"
 msgctxt "#30110"
 msgid "Choose download directory in Settings"
 msgstr "Choisissez le répertoire de téléchargement dans les paramètres"
+
+msgctxt "#30111"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#30112"
+msgid "Download"
+msgstr "Télécharger"
+
+msgctxt "#30113"
+msgid "Miscellaneous"
+msgstr "Divers"
+
+msgctxt "#30114"
+msgid "Mature Content"
+msgstr "Contenu Mature"
