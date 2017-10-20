@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
+    <category label="Download">
+        <setting id="dlfolder" type="folder" label="Download Folder" default=""/>
+    </category> 
     <category label="Tamil Scrapers">
         <setting id="tamiltv" type="bool" label="APK Land" default="true"/>
 		<setting id="rajt" type="bool" label="Raj Tamil" default="true"/>

@@ -23,7 +23,7 @@ from resources.lib import jsunpack
 class tgun(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://tamilgun.ooo'
+        self.bu = 'http://tamilgun.work'
         self.icon = self.ipath + 'tgun.png'
     
     def get_menu(self):
@@ -97,15 +97,15 @@ class tgun(Scraper):
 
         try:
             sources = json.loads(re.findall('(?s)sources:\s*(.*?)\}\)',html)[0])
-            ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
+            #ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
             for source in sources:    
                 url = source['file']
                 if 'play.php' in url:
-                    url += '|Referer=http://%s/'%self.get_vidhost(url)
+                    #url += '|Referer=http://%s/'%self.get_vidhost(url)
                     url = urllib.quote_plus(url)
                     videos.append(('tamilgun | %s'%source['label'],url))
                 else:
-                    url += '|User-Agent=%s'%ua
+                    url += '|User-Agent=%s'%self.hdr['User-Agent']
                     url = urllib.quote_plus(url)
                     videos.append(('tamilgun live',url))
         except:
@@ -151,3 +151,11 @@ class tgun(Scraper):
             pass
             
         return videos
+        
+    def get_video(self,url):
+        headers = self.hdr
+        headers['Referer'] = 'http://%s/'%self.get_vidhost(url)
+        url += '&stream=1'
+        html = requests.get(url, headers=self.hdr, allow_redirects=False)
+        strurl = html.headers.get('location')
+        return strurl

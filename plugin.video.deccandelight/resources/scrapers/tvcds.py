@@ -23,7 +23,7 @@ import HTMLParser
 class tvcds(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://thiruttuvcds.com/category/'
+        self.bu = 'http://thiruttuvcds.org/category/'
         self.icon = self.ipath + 'tvcds.png'
         self.list = {'01Tamil Movies': self.bu + 'new-tamil-movies/',
                      '02Telugu Movies': self.bu + 'telugu/',

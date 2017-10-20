@@ -23,9 +23,11 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 from BeautifulSoup import BeautifulSoup, SoupStrainer
-import abc, urllib, re, requests, json
+import abc, urllib, re, requests, json, os
 import resources.lib.jsunpack as jsunpack
 import urlresolver
+import YDStreamUtils
+import YDStreamExtractor
 
 try:
     import StorageServer
@@ -39,6 +41,7 @@ _handle = int(sys.argv[1])
 
 _addon = xbmcaddon.Addon()
 _addonname = _addon.getAddonInfo('name')
+_addonID = _addon.getAddonInfo('id')
 _icon = _addon.getAddonInfo('icon')
 _fanart = _addon.getAddonInfo('fanart')
 _path = _addon.getAddonInfo('path')
@@ -93,9 +96,9 @@ class Scraper(object):
                         'cineview', 'bollyheaven', 'videolinkz', 'moviefk.co',
                         'imdb.', 'mgid.', 'atemda.', 'movierulz.', 'facebook.', 
                         'm2pub', 'abcmalayalam', 'india4movie.co', '.filmlinks4u',
-                        'tamilraja.', 'multiup.', 'filesupload.', 'fileorbs.',
+                        'tamilraja.', 'multiup.', 'filesupload.', 'fileorbs.', 'tamil.ws'
                         'insurance-donate.', '.blogspot.', 'yodesi.net', 'desi-tashan.',
-                        'yomasti.co/ads', 'ads.yodesi', 'business-tv.me/ads']
+                        'yomasti.co/ads', 'ads.yodesi', 'business-tv.me/ads' 'mylifeads']
 
         embed_list = ['cineview', 'bollyheaven', 'videolinkz', 'vidzcode',
                       'embedzone', 'embedsr', 'fullmovie-hd', 'adly.biz',
@@ -155,7 +158,7 @@ class Scraper(object):
                     if 'http' in item and 'justmovies' not in item:
                         strurl = item
                 strurl += url.split('?id=')[1]
-                strurl += '.mp4'
+                strurl += '.mp4|User-Agent=%s'%mozhdr['User-Agent']
                 vidhost = 'GVideo'
                 strurl = urllib.quote_plus(strurl)
                 videos.append((vidhost,strurl))
@@ -232,16 +235,16 @@ class Scraper(object):
             try:
                 links = re.findall('''(?i)<iframe.+?src=["']([^'"]+)''', clink)
                 for strurl in links:
-                    xbmc.log('-------> Scraped link : %s' % strurl)
+                    #xbmc.log('-------> Scraped link : %s' % strurl, xbmc.LOGNOTICE)
                     if not any([x in strurl for x in non_str_list]):
-                        xbmc.log('-------> sending to URLResolver for checking : %s' % strurl)
+                        #xbmc.log('-------> sending to URLResolver for checking : %s' % strurl, xbmc.LOGNOTICE)
                         if urlresolver.HostedMediaFile(strurl):
                             vidhost = self.get_vidhost(strurl)
                             if not vidtxt == '':
                                 vidhost += ' | %s' % vidtxt
                             videos.append((vidhost,strurl))
                         else:
-                            xbmc.log('-------> URLResolver cannot resolve : %s' % strurl)
+                            xbmc.log('-------> URLResolver cannot resolve : %s'%strurl, xbmc.LOGNOTICE)
             except:
                 pass
 
@@ -300,7 +303,7 @@ class Scraper(object):
                     vidhost += ' | %s' % vidtxt
                 videos.append((vidhost,url))
             else:
-                xbmc.log('-------> URLResolver cannot resolve : %s' % url)
+                xbmc.log('-------> URLResolver cannot resolve : %s'%url, xbmc.LOGNOTICE)
 
         return
         
@@ -554,6 +557,7 @@ def list_videos(site,title,iurl,thumb):
         list_item.addStreamInfo('video', { 'codec': 'h264'})
         list_item.setProperty('IsPlayable', 'true')
         url = '{0}?action=9&iurl={1}'.format(_url, video[1])
+        list_item.addContextMenuItems([('Save Video', 'RunPlugin(plugin://'+_addonID+'/?action=10&iurl='+video[1]+'ZZZZ'+title+')',)])
         is_folder = False
         listing.append((url, list_item, is_folder))
 
@@ -563,6 +567,7 @@ def list_videos(site,title,iurl,thumb):
 def resolve_url(url):
     duration=7500   
     try:
+        #xbmc.log("DeccanDelight Passing to URLResolver",xbmc.LOGNOTICE)
         stream_url = urlresolver.HostedMediaFile(url=url).resolve()
         # If urlresolver returns false then the video url was not resolved.
         if not stream_url or not isinstance(stream_url, basestring):
@@ -578,7 +583,7 @@ def resolve_url(url):
         
     return stream_url
 
-def play_video(iurl):
+def play_video(iurl, dl=False):
     """
     Play a video by the provided path.
 
@@ -588,11 +593,16 @@ def play_video(iurl):
                      'watchtamiltv.', 'cloudspro.', 'abroadindia.',
                      'hindigeetmala.','.mp4', 'googlevideo.', '/hls/',
                      'tamilhdtv.', 'andhrawatch.', 'tamiltvsite.',
-                     'justmoviesonline.', '.mp3', 'googleapis.',
-                     'ozee.', 'bharat-movies.', '.m3u8']
+                     'justmoviesonline.', '.mp3', 'googleapis.', '.m3u8',
+                     'ozee.', 'bharat-movies.', 'googleusercontent.']
     # Create a playable item with a path to play.
+    title = 'unknown'
+    if 'ZZZZ' in iurl:
+        title = iurl.split('ZZZZ')[1]
+        iurl = iurl.split('ZZZZ')[0]
     play_item = xbmcgui.ListItem(path=iurl)
     vid_url = play_item.getfilename()
+    #xbmc.log("DeccanDelight vid_url = %s" %vid_url,xbmc.LOGNOTICE)
     if any([x in vid_url for x in streamer_list]):
         if 'mersalaayitten' in vid_url:
             scraper = resources.scrapers.mersal.mersal()
@@ -616,6 +626,11 @@ def play_video(iurl):
                     play_item.setPath(stream_url)
                 else:
                     play_item.setPath(None)
+        elif 'tamilgun.' in vid_url:
+            scraper = resources.scrapers.tgun.tgun()
+            stream_url = scraper.get_video(vid_url)
+            if stream_url:
+                play_item.setPath(stream_url)
         elif 'ozee.' in vid_url:
             scraper = resources.scrapers.ozee.ozee()
             stream_url = scraper.get_video(vid_url)
@@ -658,8 +673,38 @@ def play_video(iurl):
         stream_url = resolve_url(vid_url)
         if stream_url:
             play_item.setPath(stream_url)    
+    
+    #xbmc.log("DeccanDelight final_url = %s" %stream_url,xbmc.LOGNOTICE)
 
-    xbmcplugin.setResolvedUrl(_handle, True, listitem=play_item)
+    if dl:
+        downloadDir = _settings('dlfolder')
+        if not downloadDir:
+            xbmc.executebuiltin('XBMC.Notification(Download:,Choose download directory in Settings!,5000)')
+            return
+        if '|' in stream_url:
+            headers = stream_url.split('|')[1]
+            stream_url = stream_url.split('|')[0]
+        
+        vid = {}
+        vid['title'] = title
+        vid['url'] = stream_url
+        vid['ext'] = 'mp4'
+        # else:
+            # vid = YDStreamExtractor.getVideoInfo(stream_url)
+        with YDStreamUtils.DownloadProgress() as prog: #This gives a progress dialog interface ready to use
+            try:
+                YDStreamExtractor.setOutputCallback(prog)
+                result = YDStreamExtractor.downloadVideo(vid,downloadDir)
+                if result:
+                    #success
+                    full_path_to_file = result.filepath
+                elif result.status != 'canceled':
+                    #download failed
+                    error_message = result.message
+            finally:
+                YDStreamExtractor.setOutputCallback(None)
+    else:
+        xbmcplugin.setResolvedUrl(_handle, True, listitem=play_item)
 
 def router(paramstring):
     """
@@ -693,6 +738,8 @@ def router(paramstring):
             list_videos(params['site'],params['title'],params['iurl'],params['thumb'])
         elif params['action'] == '9':
             play_video(params['iurl'])
+        elif params['action'] == '10':
+            play_video(params['iurl'],dl=True)
     else:
         list_sites()
 

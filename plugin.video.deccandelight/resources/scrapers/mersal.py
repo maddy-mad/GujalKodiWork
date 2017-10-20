@@ -23,7 +23,7 @@ import HTMLParser
 class mersal(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://mersalaayitten.biz/videos?c='
+        self.bu = 'http://mersalaayitten.online/videos?c='
         self.icon = self.ipath + 'mersal.png'
         self.hdstr = self.settings('mersalhd')
         self.list = {'01Tamil Movies': self.bu + '1&o=mr',
@@ -89,7 +89,11 @@ class mersal(Scraper):
             try:
                 stream_url = re.findall('source src="([^"]+).+?res="HD"',link)[0]
             except:
-                pass        
+                pass
+        
+        if '.mp4' not in stream_url:
+            slink = requests.get(stream_url, headers=headers, allow_redirects=False)
+            stream_url = slink.headers.get('location') + '|User-Agent=%s'%self.hdr['User-Agent']
 
         try:
             srtfile = re.findall('<track.+src="([^"]+)',link)[0]

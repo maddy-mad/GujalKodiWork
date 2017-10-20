@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.deccandelight"
-version="1.3.5"
+version="1.3.6"
 name="Deccan Delight"
 provider-name="Gujal">
 <requires>
@@ -9,6 +9,7 @@ provider-name="Gujal">
   <import addon="script.module.beautifulsoup" version="3.2.1"/>
   <import addon="script.common.plugin.cache" version="2.5.5"/>
   <import addon="script.module.urlresolver" version="3.0.0"/>
+  <import addon="script.module.youtube.dl" version="17.709.0"/>
   <import addon="plugin.video.f4mTester" version="2.2.3"/>
 </requires>
 <extension point="xbmc.python.pluginsource" library="main.py">
@@ -22,7 +23,7 @@ provider-name="Gujal">
 	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.
 DeccanDelight is and always will be free and open-source. None of its code and resources may be sold or redistributed for any commercial purposes.
 DeccanDelight and its developers do not host, create, or distribute any of the content displayed in the addon, it simply scrapes ad financed public websites.</disclaimer>
-	<news>[B]Version 1.3.5 - 25 Sep 2017[/B]  - Scraper fixes</news>
+	<news>[B]Version 1.3.6 - 20 Oct 2017[/B]  - Scraper fixes</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
