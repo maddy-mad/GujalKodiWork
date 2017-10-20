@@ -235,7 +235,7 @@ msgstr "Général"
 
 msgctxt "#30112"
 msgid "Download"
-msgstr "Télécharger"
+msgstr "Téléchargement"
 
 msgctxt "#30113"
 msgid "Miscellaneous"
@@ -243,4 +243,4 @@ msgstr "Divers"
 
 msgctxt "#30114"
 msgid "Mature Content"
-msgstr "Contenu Mature"
+msgstr "Contenus adultes"
