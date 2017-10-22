@@ -1,3 +1,6 @@
+2.3.3
+- Correct some French strings
+
 2.3.2
 - Remove unsupported languages
 
