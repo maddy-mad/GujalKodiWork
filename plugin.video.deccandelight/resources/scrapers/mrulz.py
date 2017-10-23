@@ -23,7 +23,7 @@ import HTMLParser
 class mrulz(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://www.movierulz.mn/category/'
+        self.bu = 'http://www.movierulz.ms/category/'
         self.icon = self.ipath + 'mrulz.png'
         self.list = {'01Tamil Movies': self.bu + 'tamil-movie/',
                      '02Telugu Movies': self.bu + 'telugu-movie/',
