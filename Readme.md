@@ -1,6 +1,5 @@
-# GujalKodiWork
-Kodi addons developed by Gujal
-<br>Latest repository zip file is 
+# Kodi addons developed by Gujal
+Latest repository zip file is 
 [repository.gujal-1.5](https://github.com/Gujal00/GujalKodiWork/releases/download/1.5/repository.gujal-1.5.zip)
 
 ### Disclaimer
