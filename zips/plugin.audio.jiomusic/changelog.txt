@@ -1,2 +1,2 @@
-[B]Version 2017.10.31[/B]
+[B]Version 0.1.0 - 31 Oct 2017[/B]
 - First release

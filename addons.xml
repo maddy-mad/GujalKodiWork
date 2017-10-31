@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
 <addon id="plugin.audio.jiomusic"
-version="2017.10.31"
+version="0.1.0"
 name="Jio Music"
 provider-name="gujal">
 <requires>

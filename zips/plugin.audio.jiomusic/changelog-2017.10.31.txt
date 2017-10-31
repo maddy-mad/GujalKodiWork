@@ -1,2 +1,0 @@
-[B]Version 2017.10.31[/B]
-- First release
