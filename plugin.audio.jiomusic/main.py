@@ -14,6 +14,18 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    
+    API Endpoint URLs
+    Big Thanks to Vikas Kapadiya
+    https://github.com/vikas5914
+
+    Base Url - https://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/home/{language}
+    Image Url -  https://jioimages.cdn.jio.com/hdindiamusic/images/{image_url}
+    Album url - http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/albumsongs/albumid/{album_id}
+    Playlist Url - http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/listsongs/playlistsongs/{playlist_id}
+    Song Url - http://jiobeats.cdn.jio.com/mod/_definst_/mp4:hdindiamusic/audiofiles/{id}/(song}/{song_id}_{bitrate}.mp4/chunklist.m3u8
+               http://jiobeats.cdn.jio.com/mod/_definst_/smil:hdindiamusic/audiofiles/{id}/{song}/{song_id}_h.smil/playlist.m3u8
 """
 
 import sys
@@ -47,9 +59,16 @@ if not os.path.exists(xbmc.translatePath('special://profile/addon_data/%s/settin
 _settings = _addon.getSetting
 
 mozhdr = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'}
+
+"""
+
+
+"""
 _bu = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/home/'
 _biu = 'http://mumsite.cdnsrv.jio.com/jioimages.cdn.jio.com/hdindiamusic/images/'
-_bsiu = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/songdetails/'
+_bau = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/albumsongs/albumid/'
+_bpu = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/listsongs/playlistsongs/'
+_bsdu = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/songdetails/'
 qual = ['h', '32', '64', '128', '256', '320']
 
 cache = StorageServer.StorageServer("jiomusic", _settings('timeout'))
@@ -97,11 +116,10 @@ def get_stations(iurl):
     """
     stations = []
     items = requests.get(_bu+iurl, headers=mozhdr).json()['result']['data']
+    item_types = ['Dynamic', 'songs', 'albums', 'playlist']
     
     for item in items:
-        if item['type'] == 'Dynamic' \
-        or item['type'] == 'songs' \
-        or item['type'] == 'albums':
+        if any([x == item['type'] for x in item_types]):
             title = item['name']
             jdata = base64.b64encode(json.dumps(item['list']))
             stations.append((title, item['type'], jdata))
@@ -140,67 +158,14 @@ def list_stations(iurl):
         list_item.setInfo('music', {'title': station[0]})
         if station[1] == 'albums':
             act = 'list_albums'
+        elif station[1] == 'playlist':
+            act = 'list_playlists'
         else:
             act = 'list_songs'
         url = '{0}?action={1}&iurl={2}'.format(_url, act, station[2])
         is_folder = True
         listing.append((url, list_item, is_folder))
     xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
-    xbmcplugin.endOfDirectory(_handle)
-
-def list_albums(iurl):
-    """
-    Create the list of albums in the Kodi interface.
-    """
-    albums = json.loads(base64.b64decode(iurl))
-    listing = []
-    for album in albums:
-        list_item = xbmcgui.ListItem(label=album['title'])
-        list_item.setArt({'thumb': _biu + album['image'],
-                          'icon': _biu + album['image'],
-                          'fanart': _fanart})
-        list_item.setInfo('music', {'title': album['title']})
-        list_item.setProperty('IsPlayable', 'false')
-        ids = album['image'].split('/')
-        aid = ids[0] + '_' + album['albumid'] + 'SS' + album['songCount']
-        url = '{0}?action=list_album&iurl={1}'.format(_url, aid)
-        is_folder = True
-        listing.append((url, list_item, is_folder))
-    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
-    xbmcplugin.endOfDirectory(_handle)
-
-def list_album(aid):
-    """
-    Create the list of songs in the Kodi interface.
-    """
-    aid,songs=aid.split('SS')
-    listing = []
-    for s in range(1,int(songs)+1):
-        sid = aid + '_' + str(s)
-        song = requests.get(_bsiu + sid, headers=mozhdr).json()['result']['data']
-        list_item = xbmcgui.ListItem(label=song['songtitle'])
-        thumb = _biu + song['imageurl'].replace('70x70','200x200')
-        list_item.setArt({'thumb': thumb,
-                          'icon': _icon,
-                          'fanart': _fanart})
-        list_item.setInfo('music', {'title': song['songtitle']})
-        try:
-            list_item.setInfo('music', {'album': song['albumname']})
-        except:
-            pass
-        try:
-            list_item.setInfo('music', {'artist': song['artist']})
-        except:
-            pass
-        list_item.setProperty('IsPlayable', 'true')
-        ids = sid.split('_')
-        surl = _bsu%(ids[0],ids[1],sid,_bitrate)
-        url = '{0}?action=play&iurl={1}'.format(_url, surl)
-        is_folder = False
-        listing.append((url, list_item, is_folder))
-    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
-    if force_view:
-        xbmc.executebuiltin('Container.SetViewMode(%s)'%view_mode)
     xbmcplugin.endOfDirectory(_handle)
     
 def list_songs(iurl):
@@ -236,6 +201,60 @@ def list_songs(iurl):
         xbmc.executebuiltin('Container.SetViewMode(%s)'%view_mode)
     xbmcplugin.endOfDirectory(_handle)
 
+def list_albums(iurl):
+    """
+    Create the list of albums in the Kodi interface.
+    """
+    albums = json.loads(base64.b64decode(iurl))
+    listing = []
+    for album in albums:
+        list_item = xbmcgui.ListItem(label='[COLOR yellow]%s[/COLOR] [%s]'%(album['title'],album['subtitle']))
+        list_item.setArt({'thumb': _biu + album['image'],
+                          'icon': _biu + album['image'],
+                          'fanart': _fanart})
+        list_item.setInfo('music', {'title': album['title']})
+        list_item.setProperty('IsPlayable', 'false')
+        url = '{0}?action=list_album&iurl={1}'.format(_url, album['albumid'])
+        is_folder = True
+        listing.append((url, list_item, is_folder))
+    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
+    xbmcplugin.endOfDirectory(_handle)
+
+def list_album(aid):
+    """
+    Create the list of songs in the Kodi interface.
+    """
+    item = requests.get(_bau+aid, headers=mozhdr).json()['result']['data']
+    songs = base64.b64encode(json.dumps(item['list']))
+    list_songs(songs)
+
+def list_playlists(iurl):
+    """
+    Create the list of albums in the Kodi interface.
+    """
+    playlists = json.loads(base64.b64decode(iurl))
+    listing = []
+    for playlist in playlists:
+        list_item = xbmcgui.ListItem(label='[COLOR yellow]%s[/COLOR] [%s]'%(playlist['title'],playlist['subtitle']))
+        list_item.setArt({'thumb': _biu + playlist['image'],
+                          'icon': _biu + playlist['image'],
+                          'fanart': _fanart})
+        list_item.setInfo('music', {'title': playlist['title']})
+        list_item.setProperty('IsPlayable', 'false')
+        url = '{0}?action=list_playlist&iurl={1}'.format(_url, playlist['playlistid'])
+        is_folder = True
+        listing.append((url, list_item, is_folder))
+    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
+    xbmcplugin.endOfDirectory(_handle)
+
+def list_playlist(pid):
+    """
+    Create the list of songs in the Kodi interface.
+    """
+    item = requests.get(_bpu+pid, headers=mozhdr).json()['result']['data']
+    songs = base64.b64encode(json.dumps(item['list']))
+    list_songs(songs)
+    
 def play_audio(iurl):
     """
     Play an audio by the provided path.
@@ -272,6 +291,10 @@ def router(paramstring):
             list_albums(params['iurl'])
         elif params['action'] == 'list_album':
             list_album(params['iurl'])
+        elif params['action'] == 'list_playlists':
+            list_playlists(params['iurl'])
+        elif params['action'] == 'list_playlist':
+            list_playlist(params['iurl'])
         elif params['action'] == 'play':
             play_audio(params['iurl'])
     else:

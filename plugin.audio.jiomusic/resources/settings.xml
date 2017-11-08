@@ -3,7 +3,7 @@
 		<setting id="maxBitRate" type="enum" label="Audio Bitrate" values="Auto|Very Low (32 Kbps)|Low (64 Kbps)|Medium (128 Kbps)|High (256 Kbps)|Very High (320 Kbps)" default="3"/>
 		<setting label="Cache Timeout in hours" type="number" id="timeout" default="1"/>
 		<setting id="forceView" type="bool" label="Force View Mode" default="false"/>
-		<setting id="viewMode" type="number" label="Mode" visible="eq(-1,true)" enable="!eq(-1,)" default="504"/>
+		<setting id="viewMode" type="number" label="Mode" visible="eq(-1,true)" enable="!eq(-1,)" default="500"/>
 	</category>
     <category label="Languages">
         <setting id="Tamil" type="bool" label="Tamil" default="true"/>
