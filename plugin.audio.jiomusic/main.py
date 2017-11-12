@@ -24,6 +24,8 @@
     Image Url -  https://jioimages.cdn.jio.com/hdindiamusic/images/{image_url}
     Album url - http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/albumsongs/albumid/{album_id}
     Playlist Url - http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/listsongs/playlistsongs/{playlist_id}
+    Seacrh Url - http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/search2/{name}/{language (optional)}
+    Search autocomplete Url - http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/autocomplete/{name}
     Song Url - http://jiobeats.cdn.jio.com/mod/_definst_/mp4:hdindiamusic/audiofiles/{id}/(song}/{song_id}_{bitrate}.mp4/chunklist.m3u8
                http://jiobeats.cdn.jio.com/mod/_definst_/smil:hdindiamusic/audiofiles/{id}/{song}/{song_id}_h.smil/playlist.m3u8
 """
@@ -36,6 +38,7 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 import requests
+import urllib
 import base64
 import json
 try:
@@ -69,6 +72,8 @@ _biu = 'http://mumsite.cdnsrv.jio.com/jioimages.cdn.jio.com/hdindiamusic/images/
 _bau = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/albumsongs/albumid/'
 _bpu = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/listsongs/playlistsongs/'
 _bsdu = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/songdetails/'
+_su = 'http://beatsapi.media.jio.com/v2_1/beats-api/jio/src/response/search2/'
+
 qual = ['h', '32', '64', '128', '256', '320']
 
 cache = StorageServer.StorageServer("jiomusic", _settings('timeout'))
@@ -100,8 +105,17 @@ MAINLIST = {'01Tamil': 'tamil',
             '14Bhojpuri': 'bhojpuri',
             '15Odia': 'odia',
             '16Rajasthani': 'rajasthani',
-            '17English': 'english'}
+            '17English': 'english',
+            '99[COLOR yellow]** Search **[/COLOR]': 'search'}
 
+def get_SearchQuery(sitename):
+    keyboard = xbmc.Keyboard()
+    keyboard.setHeading('Search ' + sitename)
+    keyboard.doModal()
+    if keyboard.isConfirmed() and keyboard.getText():
+        search_text = keyboard.getText()
+        return urllib.quote_plus(search_text)
+        
 def get_langs():
     """
     Get the list of languages.
@@ -115,15 +129,14 @@ def get_stations(iurl):
     :return: list
     """
     stations = []
+    stations.append(('[COLOR yellow]** Search **[/COLOR]','search',iurl))
     items = requests.get(_bu+iurl, headers=mozhdr).json()['result']['data']
     item_types = ['Dynamic', 'songs', 'albums', 'playlist']
-    
     for item in items:
         if any([x == item['type'] for x in item_types]):
             title = item['name']
             jdata = base64.b64encode(json.dumps(item['list']))
             stations.append((title, item['type'], jdata))
-   
     return stations
 
 def list_langs():
@@ -133,12 +146,15 @@ def list_langs():
     langs = get_langs()
     listing = []
     for lang in sorted(langs):
-        if _settings(lang[2:]) == 'true':
+        if _settings(lang[2:]) == 'true' or 'Search' in lang:
             list_item = xbmcgui.ListItem(label=lang[2:])
             list_item.setArt({'thumb': _icon,
                               'icon': _icon,
                               'fanart': _fanart})
-            url = '{0}?action=list_stations&iurl={1}'.format(_url, MAINLIST[lang])
+            action = 'list_stations'
+            if 'Search' in lang:
+                action = 'list_search'
+            url = '{0}?action={1}&iurl={2}'.format(_url, action, MAINLIST[lang])
             is_folder = True
             listing.append((url, list_item, is_folder))
     xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
@@ -160,9 +176,41 @@ def list_stations(iurl):
             act = 'list_albums'
         elif station[1] == 'playlist':
             act = 'list_playlists'
+        elif station[1] == 'search':
+            act = 'list_search'
         else:
             act = 'list_songs'
         url = '{0}?action={1}&iurl={2}'.format(_url, act, station[2])
+        is_folder = True
+        listing.append((url, list_item, is_folder))
+    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
+    xbmcplugin.endOfDirectory(_handle)
+
+def list_search(lang):
+    """
+    Create the list of items in the Kodi interface.
+    """
+    search_text = get_SearchQuery('Jiomusic')
+    if lang == 'search':
+        lang = ''
+    surl = _su + search_text + '/' + lang
+    stations = requests.get(surl, headers=mozhdr).json()['result']['data']
+    listing = []
+    for item in ['Albums','Playlists','Songs']:
+        items = base64.b64encode(json.dumps(stations[item]))
+        list_item = xbmcgui.ListItem(label=item)
+        list_item.setArt({'thumb': _icon,
+                          'icon': _icon,
+                          'fanart': _fanart})
+        list_item.setInfo('music', {'title': item})
+        
+        if item == 'Albums':
+            act = 'list_albums'
+        elif item == 'Playlists':
+            act = 'list_playlists'
+        else:
+            act = 'list_songs'
+        url = '{0}?action={1}&iurl={2}'.format(_url, act, items)
         is_folder = True
         listing.append((url, list_item, is_folder))
     xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
@@ -285,6 +333,8 @@ def router(paramstring):
     if params:
         if params['action'] == 'list_stations':
             list_stations(params['iurl'])
+        elif params['action'] == 'list_search':
+            list_search(params['iurl'])
         elif params['action'] == 'list_songs':
             list_songs(params['iurl'])
         elif params['action'] == 'list_albums':
