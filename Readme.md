@@ -13,7 +13,7 @@ These addons and their developers are not in any way affiliated with Kodi or any
 ## Addons in repository
 |Icon|Name|Version|Release Date|Status|
 |---|---|---|---|---|
-|<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/plugin.audio.jiomusic/icon.png" width="96">|Jio Music|0.2.0|[2017-11-08](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.audio.jiomusic/changelog.txt)|Working
+|<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/plugin.audio.jiomusic/icon.png" width="96">|Jio Music|0.3.0|[2017-11-12](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.audio.jiomusic/changelog.txt)|Working
 |<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/plugin.audio.radiosindia/icon.png" width="96">|Radios India|0.1.1|[2016-12-14](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.audio.radiosindia/changelog.txt)|Working
 |<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/plugin.video.deccandelight/icon.png" width="96">|Deccan Delight|1.3.7|[2017-10-23](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.deccandelight/changelog.txt)|Working
 |<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/plugin.video.desitashan/icon.png" width="96">|Desi Tashan|0.1.2|[2016-11-18](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.desitashan/changelog.txt)|Broken
