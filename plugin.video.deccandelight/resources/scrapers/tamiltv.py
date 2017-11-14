@@ -164,6 +164,8 @@ class tamiltv(Scraper):
                 act_data = json.loads(link)
                 try:
                     act_url = act_data['hls']
+                    if 'http' not in act_url:
+                        act_url = 'http:' + act_url
                     link = requests.get('https://services.dacast.com/token/i%s?'%surl, headers=headers, verify=False).text
                     act_data = json.loads(link)
                     new_token = act_data["token"]

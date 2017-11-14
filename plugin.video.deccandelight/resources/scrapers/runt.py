@@ -61,10 +61,13 @@ class runt(Scraper):
                 thumb = self.icon
             movies.append((title, thumb, url))
         
-        if 'Next' in str(Paginator):
+        if 'naviright dis' not in str(Paginator):
             currpg = Paginator.find('span', {'class':'current'}).text
             purl = Paginator.find('div', {'class':'naviright'}).find('a')['href']
-            lastpg = Paginator.find('a', {'class':'last'}).text
+            if 'last' in str(Paginator):
+                lastpg = Paginator.find('a', {'class':'last'}).text
+            else:
+                lastpg = Paginator.findAll('a', {'class':'single_page'})[-1].text
             title = 'Next Page.. (Currently in %s of %s)'%(currpg, lastpg)
             movies.append((title, self.nicon, purl))
         
@@ -113,5 +116,11 @@ class runt(Scraper):
 
         except:
             pass
-            
+
+        try:
+            vidurl = videoclass.find('embed').get('src').split('?')[0]
+            self.resolve_media(vidurl,videos)
+
+        except:
+            pass            
         return videos

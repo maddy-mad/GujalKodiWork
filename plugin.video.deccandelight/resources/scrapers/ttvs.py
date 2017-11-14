@@ -20,6 +20,7 @@ from BeautifulSoup import BeautifulSoup, SoupStrainer
 from resources.lib import unwise
 import urllib, re, requests
 import HTMLParser
+#import xbmc
 
 class ttvs(Scraper):
     def __init__(self):
@@ -27,21 +28,22 @@ class ttvs(Scraper):
         self.bu = 'http://www.tamiltvshows.net/category/'
         self.icon = self.ipath + 'ttvs.png'
         self.list = {'01Recently Added': self.bu[:-9],
-                     '02Sun TV Series': self.bu + 'sun-tv-serials/',
-                     '03Sun TV Shows': self.bu + 'sun-tv-shows/',
-                     '04Vijay TV Series': self.bu + 'vijay-tv-serials/',
-                     '05Vijay TV Shows': self.bu + 'vijay-tv-shows/',
-                     '06Zee Tamil TV Series': self.bu + 'zee-tamil-serials/',
-                     '07Zee Tamil TV Shows': self.bu + 'zee-tv-shows/',
-                     '08Raj TV Series': self.bu + 'raj-tv-serials/',
-                     '09Raj TV Shows': self.bu + 'raj-tv-shows/',
-                     '10Polimer TV Shows': self.bu + 'polimer-tv-serials/',
-                     '11Captain TV Shows': self.bu + 'captain-tv-shows/',
-                     '12Jaya TV Shows': self.bu + 'jaya-tv-programs/',
-                     '13Kalaignar TV Shows': self.bu + 'kalaignar-tv-shows/',
-                     '14Puthuyugam TV Shows': self.bu + 'puthuyugam/',
-                     '15Puthiya Thalaimurai TV Shows': self.bu + 'puthiya-thalaimurai-tv-shows/',
-                     '16[COLOR yellow]** Search **[/COLOR]': self.bu[:-9] + '?s='}
+                     '02Sun TV Series': self.bu + 'tamil-serials/sun-tv-serials/',
+                     '03Sun TV Shows': self.bu + 'tamil-tv-shows/sun-tv-shows/',
+                     '04Vijay TV Series': self.bu + 'tamil-serials/vijay-tv-serials/',
+                     '05Vijay TV Shows': self.bu + 'tamil-tv-shows/vijay-tv-shows/',
+                     '06Zee Tamil TV Series': self.bu + 'tamil-serials/zee-tamil-serials/',
+                     '07Zee Tamil TV Shows': self.bu + 'tamil-tv-shows/zee-tv-shows/',
+                     '08Raj TV Series': self.bu + 'tamil-serials/raj-tv-serials/',
+                     '09Raj TV Shows': self.bu + 'tamil-tv-shows/raj-tv-shows/',
+                     '10Jaya TV Series': self.bu + 'tamil-serials/jaya-tv-serials/',
+                     '11Jaya TV Shows': self.bu + 'tamil-tv-shows/jaya-tv-programs/',
+                     '13Kalaignar TV Shows': self.bu + 'tamil-tv-shows/kalaignar-tv-shows/',
+                     '30Polimer TV Serials': self.bu + 'tamil-serials/polimer-tv-serials/',
+                     '31Captain TV Shows': self.bu + 'tamil-tv-shows/captain-tv-shows/',
+                     '32Puthuyugam TV Shows': self.bu + 'tamil-tv-shows/puthuyugam/',
+                     '33Puthiya Thalaimurai TV Shows': self.bu + 'tamil-tv-shows/puthiya-thalaimurai-tv-shows/',
+                     '99[COLOR yellow]** Search **[/COLOR]': self.bu[:-9] + '?s='}
 
     def get_menu(self):
         return (self.list,7,self.icon)
@@ -55,14 +57,13 @@ class ttvs(Scraper):
             url = url + search_text
 
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'id':'videos'})
-        mdiv = BeautifulSoup(html, parseOnlyThese=mlink)
-        plink = SoupStrainer('div', {'class':'wp-pagenavi'})
+        mlink = SoupStrainer('article')
+        items = BeautifulSoup(html, parseOnlyThese=mlink)
+        plink = SoupStrainer('div', {'class':re.compile('^post-pagination')})
         Paginator = BeautifulSoup(html, parseOnlyThese=plink)
-        items = mdiv.findAll('div', {'class':re.compile('video')})
         
         for item in items:
-            title = h.unescape(item.find('a')['title'])
+            title = h.unescape(item.h4.a.text)
             title = self.clean_title(title)
             url = item.find('a')['href']
             try:
@@ -72,10 +73,11 @@ class ttvs(Scraper):
             movies.append((title, thumb, url))
         
         if 'next' in str(Paginator):
-            nextli = Paginator.find('a', {'class':'nextpostslink'})
+            nextli = Paginator.find('a', {'class':re.compile('^next')})
             purl = nextli.get('href')
-            pgtxt = Paginator.find('span', {'class':'pages'}).text
-            title = 'Next Page.. (Currently in %s)' % pgtxt
+            currpg = Paginator.find('span', {'class':re.compile('current')}).text
+            lastpg = Paginator.findAll('a', {'class':'page-numbers'})[-1].text
+            title = 'Next Page.. (Currently in Page %s of %s)'%(currpg,lastpg)
             movies.append((title, self.nicon, purl))
         
         return (movies,8)
@@ -84,13 +86,12 @@ class ttvs(Scraper):
         videos = []
             
         html = requests.get(url, headers=self.hdr).text
-        mlink = SoupStrainer('div', {'class':'entry'})
-        videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
 
         try:
-            links = videoclass.findAll('iframe')
+            links = re.findall('(<iframe.+?iframe>)',html)
             for link in links:
-                vidurl = link.get('src')
+                vidurl = re.findall('src="([^"]+)',link)[0]
+                #xbmc.log("vid_url = %s" %vidurl,xbmc.LOGNOTICE)
                 if 'tamiltvtube' in vidurl:
                     headers = self.hdr
                     headers['Referer'] = url
@@ -125,17 +126,17 @@ class ttvs(Scraper):
                             videos.append((vidhost,elink))
                     
                 else:
+                    vidurl = vidurl.split('&')[0]
                     self.resolve_media(vidurl,videos)
         except:
             pass
 
         try:
-            links = videoclass.findAll('a', {'type':'button'})
-            for link in links:
-                vidurl = re.findall("(http.*?)'",link.get('onclick'))[0]
-                if 'tv?vq=medium#/' in vidurl:
-                    vidurl = vidurl.replace('tv?vq=medium#/','')
-                self.resolve_media(vidurl,videos)
+            vidurl = re.findall("window.open\('([^']+)",html)[0]
+            vidurl = vidurl.split('&')[0]
+            if 'tv?vq=medium#/' in vidurl:
+                vidurl = vidurl.replace('tv?vq=medium#/','')
+            self.resolve_media(vidurl,videos)
         except:
             pass
             

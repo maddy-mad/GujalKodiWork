@@ -176,6 +176,20 @@ class Scraper(object):
                     videos.append((vidhost,strurl))
             except:
                 pass
+
+        elif 'videohost2.com' in url:
+            try:
+                html = requests.get(url, headers=mozhdr).text
+                pdata = eval(re.findall('Loading video.+?(\[.+?\]);',html,re.DOTALL)[0])
+                if 'id=' in url:
+                    strurl = pdata[7] + url.split('=')[1] + pdata[9]
+                else:    
+                    strurl = pdata[7]
+                vidhost = self.get_vidhost(url) + ' | GVideo'
+                strurl = urllib.quote_plus(strurl + '|Referer=%s'%url)
+                videos.append((vidhost,strurl))
+            except:
+                pass
                 
         elif 'tamildbox' in url:
             link = requests.get(url, headers=mozhdr).text
@@ -348,9 +362,10 @@ sites = {'01tgun': 'Tamil Gun : [COLOR yellow]Tamil[/COLOR]',
          '42desit': 'Desi Tashan : [COLOR yellow]Hindi Catchup TV[/COLOR]',
          '43yodesi': 'Yo Desi : [COLOR yellow]Hindi Catchup TV[/COLOR]',
          '44gmala': 'Hindi Geetmala : [COLOR yellow]Hindi Songs[/COLOR]',
-         '51mhdtv': 'MHDTV Live : [COLOR magenta]Various Live TV[/COLOR]',
-         '52aindia': 'Abroad India : [COLOR magenta]Various Live TV[/COLOR]',
-         '53ozee': 'OZee : [COLOR magenta]Various Catchup TV[/COLOR]',
+         '51thop': 'THOP TV : [COLOR magenta]Various Live TV[/COLOR]',
+         '52mhdtv': 'MHDTV Live : [COLOR magenta]Various Live TV[/COLOR]',
+         '53aindia': 'Abroad India : [COLOR magenta]Various Live TV[/COLOR]',
+         '54ozee': 'OZee : [COLOR magenta]Various Catchup TV[/COLOR]',
          '61bmov': 'Bharat Movies : [COLOR magenta]Various[/COLOR]',
          '62tvcd': 'Thiruttu VCD : [COLOR magenta]Various[/COLOR]',
          '63mrulz': 'Movie Rulz : [COLOR magenta]Various[/COLOR]',
@@ -361,7 +376,8 @@ sites = {'01tgun': 'Tamil Gun : [COLOR yellow]Tamil[/COLOR]',
          '68ttwist': 'Tamil Twists : [COLOR magenta]Various[/COLOR]',
          '69flinks': 'Film Links 4 U : [COLOR magenta]Various[/COLOR]',
          '70redm': 'Red Movies : [COLOR magenta]Various[/COLOR]',
-         '71tvcds': 'Thiruttu VCDs : [COLOR magenta]Various[/COLOR]'}
+         '71tvcds': 'Thiruttu VCDs : [COLOR magenta]Various[/COLOR]',
+         '72tmvp': 'TMVPlay : [COLOR magenta]Various[/COLOR]'}
 
 import resources.scrapers.tgun
 import resources.scrapers.rajt
@@ -391,6 +407,8 @@ import resources.scrapers.ozee
 import resources.scrapers.rasigan
 import resources.scrapers.mhdtv
 import resources.scrapers.bmov
+import resources.scrapers.tmvp
+import resources.scrapers.thop
 
 def list_sites():
     """
@@ -589,10 +607,10 @@ def play_video(iurl, dl=False):
 
     :param path: str
     """
-    streamer_list = ['tamilgun', 'mersalaayitten', 'mhdtvlive.',
+    streamer_list = ['tamilgun', 'mersalaayitten', 'mhdtvlive.', '/hls/',
                      'watchtamiltv.', 'cloudspro.', 'abroadindia.',
-                     'hindigeetmala.','.mp4', 'googlevideo.', '/hls/',
-                     'tamilhdtv.', 'andhrawatch.', 'tamiltvsite.',
+                     'hindigeetmala.','.mp4', 'googlevideo.', 'tmvplay.',
+                     'tamilhdtv.', 'andhrawatch.', 'tamiltvsite.', 'thoptv.',
                      'justmoviesonline.', '.mp3', 'googleapis.', '.m3u8',
                      'ozee.', 'bharat-movies.', 'googleusercontent.']
     # Create a playable item with a path to play.
@@ -631,6 +649,11 @@ def play_video(iurl, dl=False):
             stream_url = scraper.get_video(vid_url)
             if stream_url:
                 play_item.setPath(stream_url)
+        elif 'tmvplay.' in vid_url:
+            scraper = resources.scrapers.tmvp.tmvp()
+            stream_url = scraper.get_video(vid_url)
+            if stream_url:
+                play_item.setPath(stream_url)
         elif 'ozee.' in vid_url:
             scraper = resources.scrapers.ozee.ozee()
             stream_url = scraper.get_video(vid_url)
@@ -650,6 +673,10 @@ def play_video(iurl, dl=False):
                 if 'youtube.' in stream_url:
                     stream_url = resolve_url(stream_url)
                 play_item.setPath(stream_url)
+        elif 'thoptv.' in vid_url:
+            scraper = resources.scrapers.thop.thop()
+            stream_url = scraper.get_video(vid_url)
+            play_item.setPath(stream_url)
         elif 'mhdtvlive.' in vid_url:
             scraper = resources.scrapers.mhdtv.mhdtv()
             stream_url = scraper.get_video(vid_url)

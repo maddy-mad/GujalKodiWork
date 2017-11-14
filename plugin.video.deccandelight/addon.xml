@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.deccandelight"
-version="1.3.7"
+version="1.3.8"
 name="Deccan Delight"
 provider-name="gujal">
 <requires>
@@ -19,11 +19,11 @@ provider-name="gujal">
 	<summary>Entertainment from the Deccan region of India</summary>
 	<description>This addon provides access to entertainment in various Deccan languages such as Tamil, Telugu, Malayalam, Kannada, and Hindi</description>
 	<platform>all</platform>
-	<website>https://github.com/Gujal00</website>
+	<website>https://github.com/Gujal00/GujalKodiWork</website>
 	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.
 DeccanDelight is and always will be free and open-source. None of its code and resources may be sold or redistributed for any commercial purposes.
 DeccanDelight and its developers do not host, create, or distribute any of the content displayed in the addon, it simply scrapes ad financed public websites.</disclaimer>
-	<news>[B]Version 1.3.7 - 23 Oct 2017[/B]  - Scraper fixes</news>
+	<news>[B]Version 1.3.8 - 14 Nov 2017[/B]  - 2 New Scrapers</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
