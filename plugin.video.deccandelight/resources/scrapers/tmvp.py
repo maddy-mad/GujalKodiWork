@@ -86,9 +86,10 @@ class tmvp(Scraper):
             
         try:
             surl = re.findall('em_code_sel".+?(http[^&]+)',html)[0]
-            shtml = requests.get(surl, headers=self.hdr).text
-            linkcode = jsunpack.unpack(shtml).replace('\\','')
-            if 'sources' in linkcode:
+            linkcode = requests.get(surl, headers=self.hdr).text
+            if 'sources:' not in linkcode:
+                linkcode = jsunpack.unpack(linkcode).replace('\\','')
+            if 'sources:' in linkcode:
                 sources = json.loads(re.findall('sources:(.*?}])',linkcode)[0])
                 for source in sources:   
                     url = source['file']

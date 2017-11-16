@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 from main import Scraper
 from BeautifulSoup import BeautifulSoup, SoupStrainer
-import urllib, re, requests, time
+import urllib, re, requests, base64, json
 import HTMLParser
 import xbmc
 
@@ -26,6 +26,8 @@ class thop(Scraper):
         Scraper.__init__(self)
         self.bu = 'http://watch.thoptv.com/channels/'
         self.icon = self.ipath + 'thop.png'
+        self.qvalues = ['_400','_600','_800','_1200']
+        self.qual = self.qvalues[int(self.settings('thopqual'))]
         self.list = {'01Tamil TV': self.bu + 'tamil/',
                      '02Telugu TV': self.bu + 'telugu/',
                      '03Malayalam TV': self.bu + 'malayalam/',
@@ -75,16 +77,32 @@ class thop(Scraper):
             if '?jt=' in tlink:
                 urls,urle = tlink.split('?jt')
                 urls = re.findall('(.+/)',urls)[0]
-                tlink = '_JTE.php?channel'.join((urls,urle))
+                tlink = '_JTE_Play.php?channel'.join((urls,urle))
             html = requests.get(tlink, headers=self.hdr).text
             if 'dt.php' in tlink:
                 stream_url = re.findall('source\s*src\s*=\s*"([^"]+)',html)[0]
             elif 'yp.php' in tlink:
                 tlink = re.findall('<iframe.+?src=[\'"].*?(http[^\'"]+)', html)[0]
-                html = requests.get(tlink, headers=self.hdr).text
-                stream_url = re.findall('source\s*src\s*=\s*"([^"]+)',html)[0] + '|User-Agent=%s'%self.hdr['User-Agent']
+                html = requests.get(tlink, headers=self.hdr, allow_redirects=False).headers
+                jd = json.loads(base64.b64decode(html['location'].split('code=')[1]))
+                stream_url = jd['streamurl2'] + '|User-Agent=%s'%self.hdr['User-Agent']
             else:
-                stream_url = re.findall('var\sstream\s*=\s*"([^"]+)',html)[0].replace('_800','_1200')
+                if 'var stream' not in html:
+                    user = re.findall('Username".+?value="([^"]+)',html)[0]
+                    try:
+                        passwd = re.findall('Password".+?value="([^"]+)',html)[0]
+                    except:
+                        passwd = ''
+                    submit = re.findall('Submit".+?value="([^"]+)',html)[0].encode('utf-8')
+                    values = {'Username' : user,
+                              'Password' : passwd,
+                              'Submit' : submit}
+                    headers = self.hdr
+                    headers['Referer'] = tlink
+                    html = requests.post(tlink, data=values, headers=headers).text
+                stream_url = re.findall('var\sstream\s*=\s*"([^"]+)',html)[0]
+                if self.qual != '_800':
+                    stream_url = stream_url.replace('_800',self.qual)
                 token = re.findall('stream\s\+\s"([^"]+)',html)[0]
                 stream_url += token
         elif 'gohellotv.' in tlink:

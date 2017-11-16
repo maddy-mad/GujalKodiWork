@@ -23,7 +23,7 @@ import HTMLParser
 class moviefk(Scraper):
     def __init__(self):
         Scraper.__init__(self)
-        self.bu = 'http://www.filmgur.com/category/'
+        self.bu = 'http://www.movierng.com/category/'
         self.icon = self.ipath + 'moviefk.png'
         self.list = {'01Tamil Movies': self.bu + 'tamil-movies/',
                      '02Telugu Movies': self.bu + 'telugu-movies/',
@@ -31,7 +31,7 @@ class moviefk(Scraper):
                      '04English Movies': self.bu + 'hollywood-movies/',
                      '05Hindi Dubbed Movies': self.bu + 'hindi-dubbed-movies/',
                      '06Punjabi Movies': self.bu + 'punjabi-movies/',
-                     '07Urdu Movies': self.bu + 'pakistani-movies/',
+                     '07Trailers': self.bu + 'trailers/',
                      '09[COLOR yellow]** Search **[/COLOR]': self.bu[:-9] + '?s='}
              
     def get_menu(self):

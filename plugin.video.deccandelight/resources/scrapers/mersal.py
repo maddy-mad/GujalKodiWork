@@ -58,7 +58,7 @@ class mersal(Scraper):
         for item in items:
             title = h.unescape(item.find('span').text).encode('utf8')
             url = item.find('a')['href']
-            url = self.bu[:-9] + 'embed/' + url.split('/')[2]
+            url = self.bu[:-9] + 'media/nuevo/econfig.php?key=%s-0-0'%url.split('/')[2]
             try:
                 thumb = item.find('img')['data-original']
             except:
@@ -79,15 +79,17 @@ class mersal(Scraper):
       
     def get_video(self,url):
 
-        url = self.bu[:-9] + 'embed/' + url.split('/')[4]
+        #url = self.bu[:-9] + 'media/nuevo/econfig.php?key=%s-0-0'%url
+        rurl = self.bu[:-9] #+ 'embed/%s'%url
         headers = self.hdr
         headers['Accept-Encoding'] = 'deflate'
+        headers['Referer'] = rurl
         link = requests.get(url, headers=headers).text
             
-        stream_url = re.findall('source src="([^"]+).+?res="SD"',link)[0]
+        stream_url = re.findall('<file>([^<]+)',link)[0]
         if self.hdstr == 'true':
             try:
-                stream_url = re.findall('source src="([^"]+).+?res="HD"',link)[0]
+                stream_url = re.findall('<filehd>([^<]+)',link)[0]
             except:
                 pass
         
@@ -96,7 +98,7 @@ class mersal(Scraper):
             stream_url = slink.headers.get('location') + '|User-Agent=%s'%self.hdr['User-Agent']
 
         try:
-            srtfile = re.findall('<track.+src="([^"]+)',link)[0]
+            srtfile = re.findall('<captions>([^<]+)',link)[0]
         except:
             srtfile = None
             

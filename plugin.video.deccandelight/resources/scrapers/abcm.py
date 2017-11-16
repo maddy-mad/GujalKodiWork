@@ -49,10 +49,10 @@ class abcm(Scraper):
             thumb = self.bu + item.find('img')['src']
             movies.append((title, thumb, url))
         
-        if 'Next' in str(Paginator):
-            pdiv = Paginator.find('li', {'class':'pagination-next'})
-            purl = self.bu + pdiv.a.get('href')
-            pgtxt = re.findall('(Page.*)',Paginator.text)[0]
+        if 'next' in str(Paginator):
+            pdiv = Paginator.find('a', {'class':'next'})
+            purl = self.bu + pdiv.get('href')
+            pgtxt = re.findall('(Page\s[^<]+)',Paginator.text)[0].strip()
             title = 'Next Page.. (Currently in %s)' % pgtxt
             movies.append((title, self.nicon, purl))
         
@@ -65,6 +65,12 @@ class abcm(Scraper):
         mlink = SoupStrainer('div', {'class':'itemFullText'})
         videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
 
+        try:
+            vidurl = re.findall('Watch Online:.+?href="([^"]+)',html,re.DOTALL)[0]
+            self.resolve_media(vidurl,videos)
+        except:
+            pass
+            
         try:
             links = videoclass.findAll('div', {'class':'avPlayerContainer'})
             for link in links:

@@ -98,14 +98,15 @@ class Scraper(object):
                         'm2pub', 'abcmalayalam', 'india4movie.co', '.filmlinks4u',
                         'tamilraja.', 'multiup.', 'filesupload.', 'fileorbs.', 'tamil.ws'
                         'insurance-donate.', '.blogspot.', 'yodesi.net', 'desi-tashan.',
-                        'yomasti.co/ads', 'ads.yodesi', 'business-tv.me/ads' 'mylifeads']
+                        'yomasti.co/ads', 'ads.yodesi', 'business-tv.me/ads' 'mylifeads.',
+                        'business-service.me/ads']
 
         embed_list = ['cineview', 'bollyheaven', 'videolinkz', 'vidzcode',
                       'embedzone', 'embedsr', 'fullmovie-hd', 'adly.biz',
                       'embedscr', 'embedrip', 'movembed', 'power4link.us',
                       'watchmoviesonline4u', 'nobuffer.info', 'yomasti.co',
                       'techking.me', 'onlinemoviesworld.xyz', 'cinebix.com',
-                      'desihome.', 'loan-forex.', 'filmshowonline.',
+                      'desihome.', 'loan-forex.', 'filmshowonline.', 'business-service.me',
                       'vids.xyz', 'business-tv.me', 'telly-news.com']
            
         if 'filmshowonline.net/media/' in url:
@@ -575,7 +576,7 @@ def list_videos(site,title,iurl,thumb):
         list_item.addStreamInfo('video', { 'codec': 'h264'})
         list_item.setProperty('IsPlayable', 'true')
         url = '{0}?action=9&iurl={1}'.format(_url, video[1])
-        list_item.addContextMenuItems([('Save Video', 'RunPlugin(plugin://'+_addonID+'/?action=10&iurl='+video[1]+'ZZZZ'+title+')',)])
+        list_item.addContextMenuItems([('Save Video', 'RunPlugin(plugin://'+_addonID+'/?action=10&iurl='+video[1].encode('utf8')+'ZZZZ'+title+')',)])
         is_folder = False
         listing.append((url, list_item, is_folder))
 
