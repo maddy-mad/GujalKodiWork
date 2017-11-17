@@ -1,6 +1,6 @@
 # Kodi addons developed by Gujal
 Latest repository zip file is 
-[repository.gujal-1.6](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/repository.gujal/repository.gujal-1.6.zip)
+[repository.gujal-1.6](https://github.com/Gujal00/GujalKodiWork/releases/download/1.6/repository.gujal-1.6.zip)
 <br>
 <br>Looking for Dailymotion Addon?
 <br> It is now in the Official Kodi Repository
