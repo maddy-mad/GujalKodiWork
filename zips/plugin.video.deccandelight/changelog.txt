@@ -1,3 +1,6 @@
+[B]Version 1.4.2 - 04 Dec 2017[/B]
+ - Some scraper fixes
+ 
 [B]Version 1.4.1 - 26 Nov 2017[/B]
  - Some scraper fixes
  
