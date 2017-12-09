@@ -1,3 +1,7 @@
+[B]Version 1.4.3 - 09 Dec 2017[/B]
+  - Scraper fixes
+  - Replace ABC Malayalam with TOR Malayalam
+
 [B]Version 1.4.2 - 04 Dec 2017[/B]
  - Some scraper fixes
  
