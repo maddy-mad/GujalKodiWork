@@ -1,3 +1,7 @@
+[B]Version 1.4.5 - 28 Dec 2017[/B]
+  - Scraper fixes
+  - Runtamil and Tamiltwists sites are down, disable them in settings for now
+  
 [B]Version 1.4.4 - 14 Dec 2017[/B]
   - Scraper fixes
   
