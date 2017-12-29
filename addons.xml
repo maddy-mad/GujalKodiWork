@@ -46,7 +46,7 @@ provider-name="Gujal">
 </addon>
 
 <addon id="plugin.video.deccandelight"
-version="1.4.5"
+version="1.4.6"
 name="Deccan Delight"
 provider-name="gujal">
 <requires>

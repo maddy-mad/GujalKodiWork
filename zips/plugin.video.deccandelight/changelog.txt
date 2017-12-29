@@ -1,3 +1,6 @@
+[B]Version 1.4.6 - 29 Dec 2017[/B]
+  - Username/Password support in MHDTV Scraper
+  
 [B]Version 1.4.5 - 28 Dec 2017[/B]
   - Scraper fixes
   - Runtamil and Tamiltwists sites are down, disable them in settings for now
