@@ -1,3 +1,7 @@
+[B]Version 1.4.7 - 31 Dec 2017[/B]
+  - Scraper fixes
+  - New Scraper NexTV
+  
 [B]Version 1.4.6 - 29 Dec 2017[/B]
   - Username/Password support in MHDTV Scraper
   
