@@ -1,3 +1,8 @@
+[B]Version 1.4.8 - 5 Jan 2018[/B]
+  - Scraper fixes
+  - New Scraper HyFyTV
+  - New Scraper Tamil Serials
+  
 [B]Version 1.4.7 - 31 Dec 2017[/B]
   - Scraper fixes
   - New Scraper NexTV
