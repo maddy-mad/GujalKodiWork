@@ -1,6 +1,6 @@
 # Kodi addons developed by Gujal
 Latest repository zip file is 
-[repository.gujal-1.6](https://github.com/Gujal00/GujalKodiWork/releases/download/1.6/repository.gujal-1.6.zip)
+[repository.gujal-1.7](https://github.com/Gujal00/GujalKodiWork/releases/download/1.7/repository.gujal-1.7.zip)
 <br>
 <br>Looking for Dailymotion Addon?
 <br> It is now in the Official Kodi Repository
@@ -15,7 +15,7 @@ These addons and their developers are not in any way affiliated with Kodi or any
 |---|---|---|---|---|
 |<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.audio.jiomusic/icon.png" width="96">|Jio Music|0.3.0|[2017-11-12](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.audio.jiomusic/changelog.txt)|Working
 |<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.audio.radiosindia/icon.png" width="96">|Radios India|0.1.1|[2016-12-14](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.audio.radiosindia/changelog.txt)|Working
-|<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.deccandelight/icon.png" width="96">|Deccan Delight|1.5.1|[2018-01-13](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.deccandelight/changelog.txt)|Working
+|<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.deccandelight/icon.png" width="96">|Deccan Delight|1.5.2|[2018-02-09](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.deccandelight/changelog.txt)|Working
 |<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.desitashan/icon.png" width="96">|Desi Tashan|0.1.2|[2016-11-18](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.desitashan/changelog.txt)|Broken
 |<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.imdb.trailers/icon.png" width="96">|IMDB Trailers|2.1.1|[2017-06-14](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.imdb.trailers/changelog.txt)|Broken
 |<img src="https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.tamilgun/icon.png" width="96">|Tamil Gun|0.3.0|[2017-06-17](https://raw.githubusercontent.com/Gujal00/GujalKodiWork/master/zips/plugin.video.tamilgun/changelog.txt)|Broken
