@@ -46,7 +46,7 @@ provider-name="Gujal">
 </addon>
 
 <addon id="plugin.video.deccandelight"
-version="1.5.2"
+version="1.5.3"
 name="Deccan Delight"
 provider-name="gujal">
 <requires>
@@ -70,7 +70,7 @@ provider-name="gujal">
 	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.
 DeccanDelight is and always will be free and open-source. None of its code and resources may be sold or redistributed for any commercial purposes.
 DeccanDelight and its developers do not host, create, or distribute any of the content displayed in the addon, it simply scrapes ad financed public websites.</disclaimer>
-	<news>[B]Version 1.5.2 - 9 Feb 2018[/B] - Switch to ResolveURL</news>
+	<news>[B]Version 1.5.3 - 1 Mar 2018[/B] - TMVPlay Scraper fixes</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
