@@ -1,3 +1,10 @@
+[B]Version 1.5.5 - 28 Mar 2018[/B]
+  - MHDTV fixes
+  - TMVPlay fixes
+  - Mersalaayitten fix
+  - Movierulz fix
+  
+
 [B]Version 1.5.4 - 12 Mar 2018[/B]
   - APKLand VOD fix
 
