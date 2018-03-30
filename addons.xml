@@ -27,9 +27,9 @@ provider-name="gujal">
 </addon>
 
 <addon id="plugin.audio.radiosindia"
-version="0.1.1"
+version="0.2.0"
 name="Radios India"
-provider-name="Gujal">
+provider-name="gujal">
 <requires>
   <import addon="xbmc.python" version="2.20.0"/>
   <import addon="script.module.requests" version="2.4.3"/>
@@ -39,9 +39,17 @@ provider-name="Gujal">
   <provides>audio</provides>
 </extension>
 <extension point="xbmc.addon.metadata">
-  <summary>Radios India</summary>
-  <description>Radios India is a popular site to listen to Radio Stations from around India</description>
-  <disclaimer>This addon provides access to Radios India website and is not liable for any content hosted on that site</disclaimer>
+	<summary>Radios India</summary>
+	<description>Radios India is a popular site to listen to Radio Stations from around India</description>
+	<disclaimer>This addon provides access to Radios India website and is not liable for any content hosted on that site</disclaimer>
+  	<news>[B]Version 0.2.0 - 31 Mar 2018[/B] - Tamil section fix</news>
+	<assets>
+		<icon>icon.png</icon>
+		<fanart>fanart.jpg</fanart>
+		<screenshot>resources/images/screenshot-01.jpg</screenshot>
+		<screenshot>resources/images/screenshot-02.jpg</screenshot>
+		<screenshot>resources/images/screenshot-03.jpg</screenshot>
+	</assets>
 </extension>
 </addon>
 
