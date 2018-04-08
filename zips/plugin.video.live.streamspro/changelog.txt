@@ -1,3 +1,8 @@
+[B]Version 2.8.2[/B]
+changes by gujal
+cloudflare function updated
+removed defunct hostile addons check
+
 [B]Version 2.8.1[/B]
 regex in title and thumbnail BUGFIX revised again
 [B]Version 2.8.0[/B]
