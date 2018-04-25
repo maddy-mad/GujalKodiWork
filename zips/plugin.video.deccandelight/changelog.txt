@@ -1,3 +1,7 @@
+[B]Version 1.5.6 - 25 Apr 2018[/B]
+  - ManaTelugu new Telugu Catchup TV scraper
+  - Cloudflare fixes
+
 [B]Version 1.5.5 - 28 Mar 2018[/B]
   - MHDTV fixes
   - TMVPlay fixes

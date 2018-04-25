@@ -54,14 +54,13 @@ provider-name="gujal">
 </addon>
 
 <addon id="plugin.video.deccandelight"
-version="1.5.5"
+version="1.5.6"
 name="Deccan Delight"
 provider-name="gujal">
 <requires>
   <import addon="xbmc.python" version="2.20.0"/>
   <import addon="script.module.requests" version="2.4.3"/>
   <import addon="script.module.beautifulsoup" version="3.2.1"/>
-  <import addon="script.common.plugin.cache" version="2.5.5"/>
   <import addon="script.module.resolveurl" version="5.0.00"/>
   <import addon="script.module.youtube.dl" version="17.709.0"/>
   <import addon="plugin.video.f4mTester" version="2.2.3"/>
@@ -78,7 +77,7 @@ provider-name="gujal">
 	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.
 DeccanDelight is and always will be free and open-source. None of its code and resources may be sold or redistributed for any commercial purposes.
 DeccanDelight and its developers do not host, create, or distribute any of the content displayed in the addon, it simply scrapes ad financed public websites.</disclaimer>
-	<news>[B]Version 1.5.5 - 28 Mar 2018[/B] - multiple scraper fixes</news>
+	<news>[B]Version 1.5.6 - 25 Apr 2018[/B] - ManaTelugu new Telugu Catchup TV scraper</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
