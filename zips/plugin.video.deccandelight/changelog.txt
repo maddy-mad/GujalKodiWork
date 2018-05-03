@@ -1,3 +1,7 @@
+[B]Version 1.5.7 - 3 May 2018[/B]
+ - ManaTelugu fixes
+ - Clear cache option
+
 [B]Version 1.5.6 - 25 Apr 2018[/B]
   - ManaTelugu new Telugu Catchup TV scraper
   - Cloudflare fixes

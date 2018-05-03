@@ -54,7 +54,7 @@ provider-name="gujal">
 </addon>
 
 <addon id="plugin.video.deccandelight"
-version="1.5.6"
+version="1.5.7"
 name="Deccan Delight"
 provider-name="gujal">
 <requires>
@@ -71,13 +71,13 @@ provider-name="gujal">
 </extension>
 <extension point="xbmc.addon.metadata">
 	<summary>Entertainment from the Deccan region of India</summary>
-	<description>This addon provides access to entertainment in various Deccan languages such as Tamil, Telugu, Malayalam, Kannada, and Hindi</description>
+	<description>This addon provides access to entertainment in various Deccan languages such as Tamil, Telugu, Malayalam, Kannada, and Hindi
+DeccanDelight is and always will be free and open-source. None of its code and resources may be sold or redistributed for any commercial purposes.
+DeccanDelight and its developers [B]DO NOT[/B] host, create, or distribute any of the content displayed in the addon, it simply scrapes ad financed public websites.</description>
 	<platform>all</platform>
 	<website>https://github.com/Gujal00/GujalKodiWork</website>
-	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.
-DeccanDelight is and always will be free and open-source. None of its code and resources may be sold or redistributed for any commercial purposes.
-DeccanDelight and its developers do not host, create, or distribute any of the content displayed in the addon, it simply scrapes ad financed public websites.</disclaimer>
-	<news>[B]Version 1.5.6 - 25 Apr 2018[/B] - ManaTelugu new Telugu Catchup TV scraper</news>
+	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.</disclaimer>
+	<news>[B]Version 1.5.7 - 3 May 2018[/B] - ManaTelugu fixes - Clear cache option</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
