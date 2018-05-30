@@ -1,12 +1,19 @@
+[B]Version 2.8.4[/B]
+Changes by gujal
+ - Add openssl_aes decryption library
+Changes by jairoxyz
+ - Add Streamlink Proxy support
+
 [B]Version 2.8.3[/B]
-changes by gujal
-Add <inputstream> tag to use with Inputstream addon on Kodi 17+
-Supports multibitrate hls, mpeg-dash and MS Smoothstream.
+Changes by gujal
+ - Add <inputstream> tag to use with Inputstream addon on Kodi 17+
+   Supports multibitrate hls, mpeg-dash and MS Smoothstream.
 
 [B]Version 2.8.2[/B]
-changes by gujal
-cloudflare function updated
-removed defunct hostile addons check
+Changes by gujal
+ - cloudflare function updated
+ - removed defunct hostile addons check
+ - change <urlsolve> tag to use resolveurl instead of urlresolver  
 
 [B]Version 2.8.1[/B]
 regex in title and thumbnail BUGFIX revised again
