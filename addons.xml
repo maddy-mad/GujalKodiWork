@@ -54,7 +54,7 @@ provider-name="gujal">
 </addon>
 
 <addon id="plugin.video.deccandelight"
-version="1.5.7"
+version="1.5.8"
 name="Deccan Delight"
 provider-name="gujal">
 <requires>
@@ -77,7 +77,7 @@ DeccanDelight and its developers [B]DO NOT[/B] host, create, or distribute any o
 	<platform>all</platform>
 	<website>https://github.com/Gujal00/GujalKodiWork</website>
 	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.</disclaimer>
-	<news>[B]Version 1.5.7 - 3 May 2018[/B] - ManaTelugu fixes - Clear cache option</news>
+	<news>[B]Version 1.5.8 - 30 May 2018[/B] - Domain Changes</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
