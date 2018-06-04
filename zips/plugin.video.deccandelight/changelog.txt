@@ -1,3 +1,6 @@
+[B]Version 1.6.0 - 4 Jun 2018[/B]
+ - Tamilgun scraper fixes
+
 [B]Version 1.5.9 - 3 Jun 2018[/B]
  - Revert Caching mechanism to support Android Jarvis
  - minor scraper fixes
