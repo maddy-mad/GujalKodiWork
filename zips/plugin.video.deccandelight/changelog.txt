@@ -1,3 +1,8 @@
+[B]Version 1.6.4 - 01 Jul 2018[/B] 
+ - OnlineMoviesPK New Scraper
+ - BigBoss Tamil New Scraper
+ - LycaTV Music New Scraper
+
 [B]Version 1.6.3 - 22 Jun 2018[/B]
  - Fix Teluguflame Scraper
  - Fix TamilYogi Scraper
