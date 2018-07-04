@@ -366,7 +366,7 @@ v5.2.14 (2017-01-23)
 </addon>
 
 <addon id="plugin.video.voot"
-version="1.0.0"
+version="1.0.1"
 name="Voot"
 provider-name="Gujal">
 <requires>
@@ -385,7 +385,12 @@ With over 35,000 hours of exciting content for audiences with varying choices an
 	<platform>all</platform>
 	<website>https://github.com/Gujal00/GujalKodiWork</website>
 	<disclaimer>This 3rd party addon is not in any way commissioned or endorsed by Voot</disclaimer>
-	<news>[B]Version 1.0.0 - 03 Jul 2018[/B] - First Release</news>
+	<news>
+[B]Version 1.0.1 - 4 Jul 2018[/B]
+- Minor bug fix relating to erroneous data from site sometimes
+- Add number of available items to titles
+- Force Settings display on addon update
+	</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
