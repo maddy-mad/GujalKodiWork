@@ -1,3 +1,7 @@
+[B]Version 1.6.5 - 05 Jul 2018[/B] 
+ - TamilYogi Domain change
+ - Mersalaayitten Domain change
+ 
 [B]Version 1.6.4 - 01 Jul 2018[/B] 
  - OnlineMoviesPK New Scraper
  - BigBoss Tamil New Scraper
