@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
 <addon id="plugin.audio.jiomusic"
-version="0.3.0"
+version="0.4.0"
 name="Jio Music"
 provider-name="gujal">
 <requires>
@@ -15,7 +15,12 @@ provider-name="gujal">
 <extension point="xbmc.addon.metadata">
   <summary>Jio Music</summary>
   <description>Music for every moment. Millions of music tracks across various genres, moods, artists and languages. Right music for every moment!</description>
-  <disclaimer>This addon provides access to Jio Music India website and is not liable for any content hosted on that site</disclaimer>
+  <disclaimer>This 3rd party addon is not in any way commissioned or endorsed by Jio</disclaimer>
+  <news>
+[B]Version 0.4.0 - 05 Jul 2018[/B]
+- Add Clear Cache Function
+- Enable other views for albums and songs
+  </news>
   <assets>
     <icon>icon.png</icon>
     <fanart>fanart.jpg</fanart>
@@ -205,7 +210,7 @@ provider-name="Gujal">
 </addon>
 
 <addon id="plugin.video.tamilgun"
-version="0.3.0"
+version="0.3.1"
 name="Tamil Gun"
 provider-name="Gujal">
 <requires>
@@ -221,6 +226,7 @@ provider-name="Gujal">
   <summary>TamilGun</summary>
   <description>TamilGun is a popular site to watch Tamil Movies on demand</description>
   <disclaimer>This addon simply scrapes TamilGun website and is not liable for any content hosted on that site</disclaimer>
+  <broken>Deprecated as the site is now in Deccan Delight addon</broken>
 </extension>
 </addon>
 
