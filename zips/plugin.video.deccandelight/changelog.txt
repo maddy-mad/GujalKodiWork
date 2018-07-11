@@ -1,3 +1,7 @@
+[B]Version 1.6.6 - 11 Jul 2018[/B] 
+ - Yodesi & TV url change
+ - New Scrapers TVYaar and TamilDhool
+ 
 [B]Version 1.6.5 - 05 Jul 2018[/B] 
  - TamilYogi Domain change
  - Mersalaayitten Domain change
