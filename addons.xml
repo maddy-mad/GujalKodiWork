@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
 <addon id="plugin.audio.jiomusic"
-version="0.4.0"
+version="0.5.0"
 name="Jio Music"
 provider-name="gujal">
 <requires>
   <import addon="xbmc.python" version="2.20.0"/>
   <import addon="script.module.requests" version="2.4.3"/>
   <import addon="script.common.plugin.cache" version="2.5.5"/>
+  <import addon="repository.gujal" version="1.7"/>
 </requires>
 <extension point="xbmc.python.pluginsource" library="main.py">
   <provides>audio</provides>
@@ -17,9 +18,8 @@ provider-name="gujal">
   <description>Music for every moment. Millions of music tracks across various genres, moods, artists and languages. Right music for every moment!</description>
   <disclaimer>This 3rd party addon is not in any way commissioned or endorsed by Jio</disclaimer>
   <news>
-[B]Version 0.4.0 - 05 Jul 2018[/B]
-- Add Clear Cache Function
-- Enable other views for albums and songs
+[B]Version 0.5.0 - 19 Jul 2018[/B]
+- Fix errors in Infolabels
   </news>
   <assets>
     <icon>icon.png</icon>
@@ -32,13 +32,14 @@ provider-name="gujal">
 </addon>
 
 <addon id="plugin.audio.radiosindia"
-version="0.2.0"
+version="0.3.0"
 name="Radios India"
 provider-name="gujal">
 <requires>
   <import addon="xbmc.python" version="2.20.0"/>
   <import addon="script.module.requests" version="2.4.3"/>
   <import addon="script.module.beautifulsoup" version="3.2.1"/>
+  <import addon="repository.gujal" version="1.7"/>
 </requires>
 <extension point="xbmc.python.pluginsource" library="main.py">
   <provides>audio</provides>
@@ -47,7 +48,11 @@ provider-name="gujal">
 	<summary>Radios India</summary>
 	<description>Radios India is a popular site to listen to Radio Stations from around India</description>
 	<disclaimer>This addon provides access to Radios India website and is not liable for any content hosted on that site</disclaimer>
-  	<news>[B]Version 0.2.0 - 31 Mar 2018[/B] - Tamil section fix</news>
+  	<news>
+[B]Version 0.3.0 - 19 Jul 2018[/B]
+- Add option to disable unwanted languages
+- Add Infolabels
+	</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
@@ -376,7 +381,7 @@ v5.2.14 (2017-01-23)
 </addon>
 
 <addon id="plugin.video.voot"
-version="1.0.2"
+version="1.0.3"
 name="Voot"
 provider-name="Gujal">
 <requires>
@@ -394,12 +399,11 @@ provider-name="Gujal">
 With over 35,000 hours of exciting content for audiences with varying choices and preferences, covering Colors (Hindi), MTV, Nickelodeon, Viacom18 Motion Pictures, Colors Kannada, Colors Marathi, Colors Bangla, Colors Super and Colors Gujarati, Voot offers the biggest TV Shows, Blockbuster Movies, your favorite Toons &amp; Voot Originals, absolutely Free.</description>
 	<platform>all</platform>
 	<website>https://github.com/Gujal00/GujalKodiWork</website>
-	<disclaimer>This 3rd party addon is not in any way commissioned or endorsed by Voot</disclaimer>
+	<disclaimer>This 3rd party addon is not in any way commissioned or endorsed by Viacom 18</disclaimer>
 	<news>
-[B]Version 1.0.2 - 4 Jul 2018[/B]
-- Bug fix relating to error when empty content
-- Improve listing views
-- Force cache clear on addon update
+[B]Version 1.0.3 - 19 Jul 2018[/B]
+- Bug fix when movies/episodes more than 50
+- season &amp; episode numbers and aired date indicators
 	</news>
 	<assets>
 		<icon>icon.png</icon>
