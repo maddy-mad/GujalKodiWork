@@ -414,4 +414,38 @@ With over 35,000 hours of exciting content for audiences with varying choices an
 	</assets>
 </extension>
 </addon>
+
+<addon id="plugin.video.sonyliv"
+version="1.0.0"
+name="SonyLIV"
+provider-name="Gujal">
+<requires>
+	<import addon="xbmc.python" version="2.25.0"/>
+	<import addon="script.module.requests" version="2.4.3"/>
+	<import addon="script.common.plugin.cache" version="2.5.5"/>
+	<import addon="repository.gujal" version="1.7"/>
+</requires>
+<extension point="xbmc.python.pluginsource" library="main.py">
+	<provides>video</provides>
+</extension>
+<extension point="xbmc.addon.metadata">
+	<summary>SonyLIV is a one stop destination for Audio/Video content from Sony Pictures Networks</summary>
+	<description>SonyLIV is the first premium Video on Demand (VOD) service by Sony Pictures Networks India Private Limited (SPN), providing multi-screen engagement to users on all devices.
+SonyLIV also provides a rich array of Movies, strong line-up of events across all Sports, TV Shows and Music, LIV Kids, LIV FIT and more</description>
+	<platform>all</platform>
+	<website>https://github.com/Gujal00/GujalKodiWork</website>
+	<disclaimer>This 3rd party addon is not in any way commissioned or endorsed by Sony Pictures Networks India Pvt. Ltd.</disclaimer>
+	<news>
+[B]Version 1.0.0 - 07 Aug 2018[/B]
+- First Release
+	</news>
+	<assets>
+		<icon>icon.png</icon>
+		<fanart>fanart.jpg</fanart>
+		<screenshot>resources/screenshot-01.jpg</screenshot>
+		<screenshot>resources/screenshot-02.jpg</screenshot>
+		<screenshot>resources/screenshot-03.jpg</screenshot>
+	</assets>
+</extension>
+</addon>
 </addons>
